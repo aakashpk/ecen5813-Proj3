@@ -154,7 +154,6 @@ flash:uart.elf
 #building the executable for beaglebone black 
 #and transfer it directly to the board using scp
 upload:$(OBJECTS)
-	$(CC)=$(CCBBB)
 	$(CCBBB) $(OBJECTS) -I$(INCLUDES) $(CFLAGS) $(LDFLAGS) -o $(TARGET) -D$(DS) $(PS) -Xlinker -Map=$(OFILEPATH)/$(CUR_TARGET).map
 #	@echo "\n******Built" $(TARGET)"******\n"
 	$(SIZETOOLBBB) $(OBJECTS) $(TARGET)

@@ -13,8 +13,5 @@ void RGB_LED_Init()
 	GPIOB_PDDR |= (1<<18); // Set Direction PB.18 to output  -- red led
 	GPIOB_PDDR |= (1<<19); // Set Direction PB.19 to output -- green led
 	GPIOD_PDDR |= (1<<1); // Set Direction PD.13 to output -- blue led
-	
-	//Turn Off LEDs after initialization
-	REDON;BLUEOFF;GREENOFF;
-
+	REDOFF;GREENOFF;BLUEOFF;
 }

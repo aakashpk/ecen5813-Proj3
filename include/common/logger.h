@@ -10,7 +10,7 @@
 #include<stdio.h>
 #include "conversion.h"
 
-//#define KL25Z
+#define KL25Z
 
 #ifndef LOGGER_H
 #define LOGGER_H
@@ -32,8 +32,19 @@ typedef enum logId {
 	DATA_NUMERIC_COUNT,
 	DATA_PUNCTUATION_COUNT,
 	DATA_MISC_COUNT,
-	DATA_ANALYSIS_COMPLETED
+	DATA_ANALYSIS_COMPLETED,
+	HEART_BEAT
 	} logid_type;
+
+typedef struct log_data {
+	logid_type logID;
+	uint32_t timestamp;
+	size_t logLength;
+	void* payload;
+	uint8_t checksum;
+} logdata_type;
+
+void log_integer(int data);
 
 #ifdef KL25Z
 #include "uart.h"
@@ -46,7 +57,6 @@ void log_data_uart(uint8_t * src, size_t length);
 
 void log_string_uart(char * src);
 
-void log_integer_uart(int data);
 
 #else
 
@@ -63,8 +73,6 @@ void log_integer_uart(int data);
 void log_data(uint8_t * src, size_t length);
 
 void log_string(char * src);
-
-void log_integer(int data);
 
 void log_flush();
 

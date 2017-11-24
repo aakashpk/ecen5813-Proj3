@@ -98,7 +98,7 @@ void project2(void)
     tx_cb=malloc(sizeof(CB_t));
     CB_init(tx_cb,200);
 	
-	// Send test charcater terminal
+	// Send test characters to terminal
     UART_send_n(test_data,17);
     UART_send_n(nextline,2);
 

@@ -8,8 +8,7 @@
 
 
 # include "logger.h"
-
-//#define KL25Z
+#define KL25Z
 
 int j=0;
 
@@ -56,7 +55,7 @@ void log_data(uint8_t * src, size_t length)
 
 void log_string(char * src){
 	j=0;
-	while(*(src+j)!='\0') // print charcters till string termination character
+	while(*(src+j)!='\0') // print characters till string termination character
 	{
 		printf("%c",*(src+j));
 		j++;

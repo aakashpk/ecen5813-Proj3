@@ -11,6 +11,7 @@
 #include<stdio.h>
 
 #include "logger.h"
+#include "memory.h"
 
 
 void project3(void);

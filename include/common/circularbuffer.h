@@ -15,12 +15,12 @@
 
 typedef struct
 {	
-	uint8_t* data;
-	uint8_t* tail;
-	uint8_t* head;
-	uint8_t* limit;
-	size_t length;
-	uint8_t count;
+	uint8_t* data; // base address
+	uint8_t* tail; // last value address
+	uint8_t* head; // buffer top value address
+	uint8_t* limit; // end address
+	size_t length; // total no of items possible
+	uint8_t count; // current total no of items in the buffer
 } CB_t;
 
 typedef enum
