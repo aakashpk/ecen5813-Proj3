@@ -8,7 +8,7 @@
 
 
 # include "logger.h"
-#define KL25Z
+//#define KL25Z
 
 int j=0;
 

@@ -12,10 +12,23 @@
 
 #include "logger.h"
 #include "memory.h"
+#include "logger_queue.h"
 
 
+#ifdef KL25Z
+#include "dma.h"
+
+#define PROJECT3_RUN project3_kl25z
+
+void project3_kl25z(void);
+
+#else
+
+#define PROJECT3_RUN project3
+	
 void project3(void);
 
 
 
 
+#endif

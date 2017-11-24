@@ -25,7 +25,7 @@ int main()
 #ifdef PROJECT3
 	#define NOPRINTDEFAULT
 	#include "project3.h"
-	project3();
+	PROJECT3_RUN();
 #endif
 
 // Default message when no project compile time switch given, help on how to add the project compile time switch

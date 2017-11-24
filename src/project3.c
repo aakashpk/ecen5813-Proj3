@@ -8,12 +8,13 @@
 */
 
 #include "project3.h"
-#include "dma.h"
 
+#ifdef KL25Z
 
 #define test_transfer_length 32
 
-void project3(void)
+
+void project3_kl25z(void)
 {
 	UART_configure();
 	DMA_Init();
@@ -56,4 +57,15 @@ void project3(void)
 
 }
 
+#else
 
+void project3(void)
+{	
+	LOG_RAW_STRING("\n\rInitialized \r\n");
+	LOG_RAW_STRING("\n\r");
+	
+	
+}
+
+
+#endif

@@ -5,15 +5,16 @@
 *@date Nov 13 2017
 
 */
+#ifndef LOGGER_H
+#define LOGGER_H
 
 #include<stdint.h>
 #include<stdio.h>
 #include "conversion.h"
 
-#define KL25Z
+//#define KL25Z
 
-#ifndef LOGGER_H
-#define LOGGER_H
+
 
 typedef enum logId {
 	LOGGER_INITIALZED,
