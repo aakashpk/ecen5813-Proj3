@@ -12,6 +12,29 @@
 
 int j=0;
 
+char logId_texts[18][23] = {
+	"LOGGER_INITIALZED",
+	"GPIO_INITIALZED",
+	"SYSTEM_INITIALIZED",
+	"SYSTEM_HALTED",
+	"INFO",
+	"WARNING",
+	"ERROR",
+	"PROFILING_STARTED",
+	"PROFILING_RESULT",
+	"PROFILING_COMPLETED",
+	"DATA_RECEIVED",
+	"DATA_ANALYSIS_STARTED",
+	"DATA_ALPHA_COUNT",
+	"DATA_NUMERIC_COUNT",
+	"DATA_PUNCTUATION_COUNT",
+	"DATA_MISC_COUNT",
+	"DATA_ANALYSIS_COMPLETED",
+	"HEART_BEAT"
+};	
+
+
+
 void log_integer(int data){
 	uint8_t * buffer = (uint8_t *)calloc(10,sizeof(char)); // allocating a buffer of length 10 as 32 bit int will have max 10 characters
 	size_t length;

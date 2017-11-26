@@ -36,6 +36,10 @@ typedef enum logId {
 	DATA_ANALYSIS_COMPLETED,
 	HEART_BEAT
 	} logid_type;
+	
+	
+extern char logId_texts[18][23] ; // Array of strings to display the log value as string in UART/stdoutput
+
 
 typedef struct log_data {
 	logid_type logID;
