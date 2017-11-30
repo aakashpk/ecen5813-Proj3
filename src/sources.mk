@@ -6,7 +6,8 @@ COMMONSOURCES= debug.c\
 	conversion.c\
 	circularbuffer.c\
 	project3.c\
-	logger.c
+	logger.c\
+	logger_queue.c
 	
 KL25ZSOURCES=uart.c\
 	project2.c\

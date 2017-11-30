@@ -12,19 +12,19 @@
 #include "circularbuffer.h"
 #include "logger.h"
 
+/*
+
+*/
 
 void log_item (logdata_type *logVal);
 
 
+/*
+
+*/
+logdata_type * addLog(logdata_type *logData , logid_type logID, uint32_t timestamp , size_t logLength, void* payload);
 
 
-
-
-
-
-
-
-
-
+void print_log(logdata_type *logData);
 
 #endif // End of logger_queue.h

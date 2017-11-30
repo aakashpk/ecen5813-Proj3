@@ -8,7 +8,6 @@
 */
 
 #include "project3.h"
-#include <sys/time.h>
 
 #ifdef KL25Z
 
@@ -60,34 +59,16 @@ void project3_kl25z(void)
 
 #else
 
-void print_log(logdata_type *logData)
-{
-	LOG_RAW_STRING(logId_texts[logData->logID]);
-	LOG_RAW_STRING(" at time ");
-	LOG_RAW_INT(logData->timestamp);
-	LOG_RAW_STRING(" with payload ");
-	LOG_RAW_DATA(logData->payload,logData->logLength);
-}
 
-
-logdata_type * addLog(logdata_type *logData , logid_type logID, uint32_t timestamp , size_t logLength, void* payload, uint8_t checksum)
-{
-	logData->logID=logID;
-	logData->timestamp=timestamp;
-	logData->logLength=logLength;
-	logData->payload=payload;
-	logData->checksum=checksum;
-	return logData;
-}
 
 void project3(void)
 {
 	uint8_t test_data[6] = "abcdef";
-	LOG_RAW_STRING("\n\rInitialized \r\n");
-	LOG_RAW_STRING("\n\r");
+	//LOG_RAW_STRING("\n\rInitialized \r\n");
+	//LOG_RAW_STRING("\n\r");
 
 	logdata_type * logData=malloc(sizeof(logdata_type)),* logData1=malloc(sizeof(logdata_type));
-
+	struct timeval * time_value=malloc(sizeof(struct timeval));
 	/*
 	logData->logID = SYSTEM_INITIALIZED;
 	logData->timestamp=1234567;
@@ -95,13 +76,22 @@ void project3(void)
 	logData->payload=(uint8_t *)test_data;
 	logData->checksum=0;
 	*/
-	addLog(logData1,SYSTEM_INITIALIZED,123456789,6,(uint8_t *)test_data,0);
+	printf("\nBuild time %d : %d : %d :%d \n",buildday,buildhour,buildmin,buildsec);
+	
+	gettimeofday(time_value,NULL);
+	
+	addLog(logData1,SYSTEM_INITIALIZED,time_value->tv_sec,6,(uint8_t *)test_data);
+	
+	//Jan 1 1970 00:00 linux epoch
+	
+	//*logData = *logData1;
 
-	*logData = *logData1;
+	print_log(logData1);
+	
+	
 
-	print_log(logData);
-
-	printf("\n %d ",gettimeofday());
+	//printf("\n %d \n",);
+	
 
 	//printf("\n%d\n",sizeof(char *) );
 

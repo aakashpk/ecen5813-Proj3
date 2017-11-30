@@ -11,6 +11,7 @@
 #include<stdint.h>
 #include<stdio.h>
 #include "conversion.h"
+#include <sys/time.h>
 
 //#define KL25Z
 

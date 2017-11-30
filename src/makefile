@@ -124,6 +124,10 @@ endif
 #Path where file is transferred to in the BBB when using the upload target
 BBBPATH=/home/code/
 
+BT:=-Dbuildday=$(shell date +"%d")\
+	-Dbuildhour=$(shell date +"%H")\
+	-Dbuildmin=$(shell date +"%M")\
+	-Dbuildsec=$(shell date +"%S")\
 
 -include $(DEPS)
 
@@ -136,12 +140,12 @@ unittests:$(TESTTARGETS)
 $(TESTSRCPATH)/%.out: $(TESTSRCPATH)/%.c $(COMMONOBJECTS)
 	$(CC) $< -I$(INCLUDES) $(CFLAGS) -o $@ $(PS) $(TESTINCLUDE)	$(COMMONOBJECTS)
 	./$(TESTSRCPATH)/$@
-
+	
 
 #rule to build the executable from all source files
 build:$(OBJECTS)
 	mkdir $(OFILEPATH) -p
-	$(CC) $(OBJECTS) -I$(INCLUDES) $(CFLAGS) $(LDFLAGS) -o $(TARGET) -D$(DS) $(PS) -Xlinker -Map=$(OFILEPATH)/$(CUR_TARGET).map
+	$(CC) $(OBJECTS) -I$(INCLUDES) $(CFLAGS) $(LDFLAGS) -o $(TARGET) -D$(DS) $(PS) -Xlinker -Map=$(OFILEPATH)/$(CUR_TARGET).map $(BT)
 #	@echo "\n******Built" $(TARGET)"******\n"
 	$(SIZETOOL) $(OBJECTS) $(TARGET)
 	$(DISPOUT)
@@ -181,7 +185,7 @@ $(OFILEPATH)/%.d : %.c
 $(OFILEPATH)/%.o : %.c
 	mkdir $(OFILEPATH) -p
 #	$(CC) -MM $< -MF $(OFILEPATH)/$*.dep -I $(INCLUDES) $(CFLAGS) $(PS)
-	$(CC) -MMD -c $< -o $@ -I$(INCLUDES) $(CFLAGS) -D$(DS) $(PS)
+	$(CC) -MMD -c $< -o $@ -I$(INCLUDES) $(CFLAGS) -D$(DS) $(PS) $(BT)
 #	@echo "\n******Built" $@"******"
 
 
