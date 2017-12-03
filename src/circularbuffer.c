@@ -33,15 +33,15 @@ CB_status CB_init(CB_t* source_ptr, uint8_t length)
 	else 
 	{       /* initializes the pointers to the circular buffer*/
 
-		source_ptr->data=(uint8_t*)calloc(length,sizeof(uint8_t));
+		source_ptr->base=(uint8_t*)calloc(length,sizeof(uint8_t));
 
-		source_ptr->head=source_ptr->data;
+		source_ptr->head=source_ptr->base;
 		
 		source_ptr->tail=source_ptr->head;
 		
 		source_ptr->length=length;
 		
-		source_ptr->limit=source_ptr->data+(length-1);
+		source_ptr->limit=source_ptr->base+(length-1);
 		
 		source_ptr->count=0;
 		
@@ -84,7 +84,7 @@ CB_status CB_buffer_add_item(CB_t* source_ptr,uint8_t value)
 		{	/* For adding when the buffer is not full */
 
 			if(source_ptr->head>source_ptr->limit)
-			{	source_ptr->head=source_ptr->data;
+			{	source_ptr->head=source_ptr->base;
 				*(source_ptr->head)=value;
 				source_ptr->head+=1;
 				
@@ -160,7 +160,7 @@ CB_status CB_buffer_remove_item(CB_t* source_ptr,uint8_t* value)
 		if(source_ptr->tail==source_ptr->limit)
 		{
 
-			source_ptr->tail=source_ptr->data;
+			source_ptr->tail=source_ptr->base;
 			
 		}
 		else 
@@ -222,7 +222,7 @@ CB_status CB_peek(CB_t* source_ptr,uint8_t position, uint8_t* peeked_ptr)
 
 			uint8_t difference = ((source_ptr->head) + position) - source_ptr->limit;
 
-			*peeked_ptr=*((source_ptr->data) + difference);
+			*peeked_ptr=*((source_ptr->base) + difference);
 
 			return success;
  
@@ -334,7 +334,7 @@ CB_status CB_destroy(CB_t* source_ptr)
 
 		/* frees the allocated memory */ 
 
-		free(source_ptr->data);
+		free(source_ptr->base);
 
 		return success;
 	}

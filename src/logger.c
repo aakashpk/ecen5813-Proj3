@@ -8,6 +8,7 @@
 
 
 # include "logger.h"
+#define TEN 10
 //#define KL25Z
 
 int j=0;
@@ -36,10 +37,26 @@ char logId_texts[18][23] = {
 
 
 void log_integer(int data){
-	uint8_t * buffer = (uint8_t *)calloc(10,sizeof(char)); // allocating a buffer of length 10 as 32 bit int will have max 10 characters
+	uint8_t * buffer = (uint8_t *)calloc(TEN,sizeof(char)); // allocating a buffer of length 10 as 32 bit int will have max 10 characters
 	size_t length;
-	length=my_itoa(data,buffer,10); // Converting in base 10
+	length=my_itoa(data,buffer,TEN); // Converting in base 10
 	LOG_RAW_DATA(buffer,length);
+}
+
+logdata_t * createLog(logdata_t *logData , logid_t logID, uint32_t timestamp , size_t logLength, void* payload)
+{
+	logData->logID=logID;
+	logData->timestamp=timestamp;
+	logData->logLength=logLength;
+	logData->payload=payload;
+	logData->checksum=calc_checksum(logID,timestamp,logLength,payload);
+	return logData;
+}
+
+
+uint8_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload)
+{
+	return 100;
 }
 
 

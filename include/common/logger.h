@@ -36,21 +36,25 @@ typedef enum logId {
 	DATA_MISC_COUNT,
 	DATA_ANALYSIS_COMPLETED,
 	HEART_BEAT
-	} logid_type;
+	} logid_t;
 	
 	
 extern char logId_texts[18][23] ; // Array of strings to display the log value as string in UART/stdoutput
 
 
 typedef struct log_data {
-	logid_type logID;
+	logid_t logID;
 	uint32_t timestamp;
 	size_t logLength;
 	void* payload;
 	uint8_t checksum;
-} logdata_type;
+} logdata_t;
 
 void log_integer(int data);
+
+logdata_t * createLog(logdata_t *logData , logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
+
+uint8_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
 
 #ifdef KL25Z
 #include "uart.h"
@@ -80,7 +84,6 @@ void log_data(uint8_t * src, size_t length);
 
 void log_string(char * src);
 
-void log_flush();
 
 
 #endif	

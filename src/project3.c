@@ -63,11 +63,13 @@ void project3_kl25z(void)
 
 void project3(void)
 {
-	uint8_t test_data[6] = "abcdef";
+	uint8_t test_data[7] = "testing";
 	//LOG_RAW_STRING("\n\rInitialized \r\n");
 	//LOG_RAW_STRING("\n\r");
 
-	logdata_type * logData=malloc(sizeof(logdata_type)),* logData1=malloc(sizeof(logdata_type));
+	//void * logData=malloc(2*sizeof(logdata_t));
+	CB_log_t * Logger_q=malloc(sizeof(CB_log_t));
+	logdata_t * logData = malloc(sizeof(logdata_t));
 	struct timeval * time_value=malloc(sizeof(struct timeval));
 	/*
 	logData->logID = SYSTEM_INITIALIZED;
@@ -76,21 +78,32 @@ void project3(void)
 	logData->payload=(uint8_t *)test_data;
 	logData->checksum=0;
 	*/
+	
 	printf("\nBuild time %d : %d : %d :%d \n",buildday,buildhour,buildmin,buildsec);
+	
+	CB_log_init(Logger_q,10);
 	
 	gettimeofday(time_value,NULL);
 	
-	addLog(logData1,SYSTEM_INITIALIZED,time_value->tv_sec,6,(uint8_t *)test_data);
+	log_add(createLog(logData,SYSTEM_INITIALIZED,time_value->tv_usec,7,(uint8_t *)test_data),Logger_q);
+	
+	gettimeofday(time_value,NULL);
+	log_add(createLog(logData,PROFILING_STARTED,time_value->tv_usec,0,NULL),Logger_q);
+	
+	log_flush(Logger_q);
+	
 	
 	//Jan 1 1970 00:00 linux epoch
+	//printf("%p ",logData);
+	//printf("%d ",sizeof(logdata_t));
+	//*(logdata_t *)logData = *logData1;
+	//printf("%p ",((logdata_t *)logData+1));
 	
-	//*logData = *logData1;
+	
+	
+	
 
-	print_log(logData1);
-	
-	
-
-	//printf("\n %d \n",);
+	printf("\n -DONE- \n");
 	
 
 	//printf("\n%d\n",sizeof(char *) );

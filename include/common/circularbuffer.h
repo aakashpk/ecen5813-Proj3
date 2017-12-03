@@ -15,7 +15,7 @@
 
 typedef struct
 {	
-	uint8_t* data; // base address
+	uint8_t* base; // base address
 	uint8_t* tail; // last value address
 	uint8_t* head; // buffer top value address
 	uint8_t* limit; // end address

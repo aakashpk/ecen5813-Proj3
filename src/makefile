@@ -124,10 +124,13 @@ endif
 #Path where file is transferred to in the BBB when using the upload target
 BBBPATH=/home/code/
 
+ifneq ($(PLATFORM),KL25Z)
 BT:=-Dbuildday=$(shell date +"%d")\
 	-Dbuildhour=$(shell date +"%H")\
 	-Dbuildmin=$(shell date +"%M")\
 	-Dbuildsec=$(shell date +"%S")\
+	-Dbuildepochsec=$(shell date +"%s")
+endif
 
 -include $(DEPS)
 
