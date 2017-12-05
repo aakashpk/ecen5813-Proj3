@@ -14,9 +14,12 @@
 #include "memory.h"
 #include "logger_queue.h"
 
+#define KL25Z
+
 
 #ifdef KL25Z
 #include "dma.h"
+#include "profiler.h"
 
 #define PROJECT3_RUN project3_kl25z
 

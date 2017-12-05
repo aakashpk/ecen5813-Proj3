@@ -1,6 +1,9 @@
+#ifndef KL25Z
+
 #include "debug.h"
 #include "memory.h"
 #include "platform.h"
+
 
 
 int main()
@@ -38,3 +41,23 @@ int main()
 return 0;
 
 }
+
+
+#else
+
+#include "project3.h"
+
+
+int main()
+{
+
+	project3_kl25z();
+	
+
+return 0;
+
+}
+	
+
+
+#endif

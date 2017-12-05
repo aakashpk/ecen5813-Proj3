@@ -9,9 +9,11 @@
 
 #include "project3.h"
 
+#define KL25Z
+
 #ifdef KL25Z
 
-#define test_transfer_length 32
+#define test_transfer_length 5000
 
 
 void project3_kl25z(void)
@@ -19,13 +21,18 @@ void project3_kl25z(void)
 	UART_configure();
 	DMA_Init();
 	RGB_LED_Init();
+	SysTick_Init(100000);
+
+	CB_log_t * Logger_q=malloc(sizeof(CB_log_t));
+	logdata_t * logData = malloc(sizeof(logdata_t));
+	CB_log_init(Logger_q,30);
 
 	NVIC_ClearPendingIRQ(DMA0_IRQn); // Clear pending DMA interrupts from NVIC ICPR register
 	NVIC_EnableIRQ(DMA0_IRQn); // Enable DMA interrupt in NVIC ISER
 	NVIC_SetPriority(DMA0_IRQn,2); //Set priority of 2 for TPM interrupt
 	__enable_irq(); // Enable global interrupts
 
-	int k=0;
+
 
 	LOG_RAW_STRING("\n\rInitialized \r\n");
 	LOG_RAW_STRING("\n\r");
@@ -35,7 +42,6 @@ void project3_kl25z(void)
 	my_memset_dma(src_addr,test_transfer_length,90);
 	my_memset_dma(dst_addr,test_transfer_length,65);
 
-	while(k<10000000) {k++;}
 
 	LOG_RAW_STRING("\n\rDest Addr: ");
 	LOG_RAW_INT(dst_addr);
@@ -43,8 +49,7 @@ void project3_kl25z(void)
 	LOG_RAW_DATA(dst_addr,test_transfer_length);
 
 	my_memmove_dma(src_addr,dst_addr,test_transfer_length);
-	k=0;
-	while(k<10000000) {k++;}
+
 
 	LOG_RAW_STRING("\n\rSource Addr: ");
 	LOG_RAW_INT(src_addr);
@@ -54,6 +59,24 @@ void project3_kl25z(void)
 	LOG_RAW_INT(dst_addr);
 	LOG_RAW_STRING("\n\rDest Data\n\r");
 	LOG_RAW_DATA(dst_addr,test_transfer_length);
+
+}
+
+void profiling_memove()
+{
+	size_t start_count,end_count;
+	systickzero();
+	start_count=getcount();
+	//my_memmove_dma(src_addr,dst_addr,test_transfer_length);
+	end_count=getcount();
+	LOG_RAW_STRING("Start Count: ");LOG_RAW_INT(start_count);LOG_RAW_STRING("\n\r");
+	LOG_RAW_STRING("End Count: ");LOG_RAW_INT(end_count);LOG_RAW_STRING("\n\r");
+	LOG_RAW_STRING("Count Diff: ");LOG_RAW_INT((start_count-end_count)); LOG_RAW_STRING(" Clock Cycles\n\r");
+
+}
+
+void profiling_memset()
+{
 
 }
 

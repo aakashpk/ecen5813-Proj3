@@ -11,7 +11,10 @@ COMMONSOURCES= debug.c\
 	
 KL25ZSOURCES=uart.c\
 	project2.c\
-	system_MKL25Z4.c
+	system_MKL25Z4.c\
+	dma.c\
+	led.c\
+	profiler.c
 	
 ASSOURCES=startup_MKL25Z4.S
 	

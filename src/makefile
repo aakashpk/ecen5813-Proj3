@@ -116,7 +116,7 @@ LDFLAGS=-T ../platform/MKL25Z128xxx4_flash.ld\
 	-specs=nano.specs
 
 OBJECTS+=$(addprefix $(OFILEPATH)/,$(KL25ZSOURCES:.c=.o))
-OBJECTS+=$(addprefix $(OFILEPATH)/,$(ASSOURCES:.S=.o))
+OBJECTS+=$(ASSOURCES:.S=.o)
 DISPOUT=
 endif
 endif

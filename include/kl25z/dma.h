@@ -20,6 +20,10 @@ uint8_t * my_memmove_dma(uint8_t * src, uint8_t * dst, size_t length);
 //@param transfer_size DMA transfer size can be 1,2 or 4 bytes for 8,16 or 32 bit transfers  , size_t transfer_size
 uint8_t * my_memset_dma(uint8_t * src, size_t length, uint8_t value);
 
+uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_t transfer_size);
+
+uint8_t * my_memset_dma_size(uint8_t * src, size_t length, uint8_t value,uint8_t size);
+
 void DMA0_IRQHandler();
 
 #endif // end of dma.h
