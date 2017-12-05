@@ -9,82 +9,63 @@
 
 #include "project3.h"
 
-#define KL25Z
-
-#ifdef KL25Z
-
-#define test_transfer_length 5000
+//#define KL25Z
 
 
-void project3_kl25z(void)
+
+void project3(void)
 {
+	#ifdef KL25Z
+	// Initializations required only in KL25Z
 	UART_configure();
 	DMA_Init();
-	RGB_LED_Init();
-	SysTick_Init(100000);
-
-	CB_log_t * Logger_q=malloc(sizeof(CB_log_t));
-	logdata_t * logData = malloc(sizeof(logdata_t));
-	CB_log_init(Logger_q,30);
+	SysTick_Init(1000000);
 
 	NVIC_ClearPendingIRQ(DMA0_IRQn); // Clear pending DMA interrupts from NVIC ICPR register
 	NVIC_EnableIRQ(DMA0_IRQn); // Enable DMA interrupt in NVIC ISER
 	NVIC_SetPriority(DMA0_IRQn,2); //Set priority of 2 for TPM interrupt
 	__enable_irq(); // Enable global interrupts
+	#else
+	// Initializations required on BBB
+	// = malloc(sizeof(struct timeval));
+	
+	#endif
+	
+	
+	uint8_t * src_addr=malloc(5000),* dst_addr=malloc(5000);
+	CB_log_t * Logger_q=malloc(sizeof(CB_log_t));
+	logdata_t * logData = malloc(sizeof(logdata_t));
+	CB_log_init(Logger_q,10);
+	
 
+	LOG_RAW_STRING("\n\rMemset\r\n\n");
+	profiling_memset(src_addr);
 
+	LOG_RAW_STRING("\n\rMy Memset\r\n\n");
+	profiling_my_memset(src_addr);
+	
+	#ifdef KL25Z
+	LOG_RAW_STRING("\n\rMemset DMA\r\n\n");
+	profiling_memset_dma(src_addr);
+	#endif
+	
+	LOG_RAW_STRING("\n\n\rMemMove\r\n\n");
+	profiling_memmove(src_addr,dst_addr);
 
-	LOG_RAW_STRING("\n\rInitialized \r\n");
-	LOG_RAW_STRING("\n\r");
+	LOG_RAW_STRING("\n\n\rMy MemMove\r\n\n");
+	profiling_my_memmove(src_addr,dst_addr);
 
-	uint8_t * src_addr=malloc(test_transfer_length),* dst_addr=malloc(test_transfer_length);
-
-	my_memset_dma(src_addr,test_transfer_length,90);
-	my_memset_dma(dst_addr,test_transfer_length,65);
-
-
-	LOG_RAW_STRING("\n\rDest Addr: ");
-	LOG_RAW_INT(dst_addr);
-	LOG_RAW_STRING("\n\rDest Data\n\r");
-	LOG_RAW_DATA(dst_addr,test_transfer_length);
-
-	my_memmove_dma(src_addr,dst_addr,test_transfer_length);
-
-
-	LOG_RAW_STRING("\n\rSource Addr: ");
-	LOG_RAW_INT(src_addr);
-	LOG_RAW_STRING("\n\rSource Data\n\r");
-	LOG_RAW_DATA(src_addr,test_transfer_length);
-	LOG_RAW_STRING("\n\rDest Addr: ");
-	LOG_RAW_INT(dst_addr);
-	LOG_RAW_STRING("\n\rDest Data\n\r");
-	LOG_RAW_DATA(dst_addr,test_transfer_length);
-
+	#ifdef KL25Z
+	LOG_RAW_STRING("\n\n\rMemMove DMA\r\n\n");
+	profiling_memmove_dma(src_addr,dst_addr);
+	#endif
 }
 
-void profiling_memove()
-{
-	size_t start_count,end_count;
-	systickzero();
-	start_count=getcount();
-	//my_memmove_dma(src_addr,dst_addr,test_transfer_length);
-	end_count=getcount();
-	LOG_RAW_STRING("Start Count: ");LOG_RAW_INT(start_count);LOG_RAW_STRING("\n\r");
-	LOG_RAW_STRING("End Count: ");LOG_RAW_INT(end_count);LOG_RAW_STRING("\n\r");
-	LOG_RAW_STRING("Count Diff: ");LOG_RAW_INT((start_count-end_count)); LOG_RAW_STRING(" Clock Cycles\n\r");
-
-}
-
-void profiling_memset()
-{
-
-}
-
-#else
 
 
+/*
 
-void project3(void)
+void project3_test(void)
 {
 	uint8_t test_data[7] = "testing";
 	//LOG_RAW_STRING("\n\rInitialized \r\n");
@@ -93,25 +74,25 @@ void project3(void)
 	//void * logData=malloc(2*sizeof(logdata_t));
 	CB_log_t * Logger_q=malloc(sizeof(CB_log_t));
 	logdata_t * logData = malloc(sizeof(logdata_t));
-	struct timeval * time_value=malloc(sizeof(struct timeval));
+	
 	/*
 	logData->logID = SYSTEM_INITIALIZED;
 	logData->timestamp=1234567;
 	logData->logLength=6;
 	logData->payload=(uint8_t *)test_data;
 	logData->checksum=0;
-	*/
+	
 	
 	printf("\nBuild time %d : %d : %d :%d \n",buildday,buildhour,buildmin,buildsec);
 	
 	CB_log_init(Logger_q,10);
 	
-	gettimeofday(time_value,NULL);
+	//gettimeofday(time_value,NULL);
 	
-	log_add(createLog(logData,SYSTEM_INITIALIZED,time_value->tv_usec,7,(uint8_t *)test_data),Logger_q);
+	//log_add(createLog(logData,SYSTEM_INITIALIZED,time_value->tv_usec,7,(uint8_t *)test_data),Logger_q);
 	
-	gettimeofday(time_value,NULL);
-	log_add(createLog(logData,PROFILING_STARTED,time_value->tv_usec,0,NULL),Logger_q);
+	//gettimeofday(time_value,NULL);
+	//log_add(createLog(logData,PROFILING_STARTED,time_value->tv_usec,0,NULL),Logger_q);
 	
 	log_flush(Logger_q);
 	
@@ -133,6 +114,26 @@ void project3(void)
 
 
 }
+*/
 
 
-#endif
+
+
+/*	LOG_RAW_STRING("\n\rDest Addr: ");
+	LOG_RAW_INT(dst_addr);
+	LOG_RAW_STRING("\n\rDest Data\n\r");
+	LOG_RAW_DATA(dst_addr,test_transfer_length);
+
+	my_memcpy(src_addr,dst_addr,test_transfer_length);
+	my_memmove_dma(src_addr,dst_addr,test_transfer_length);
+
+
+	LOG_RAW_STRING("\n\rSource Addr: ");
+	LOG_RAW_INT(src_addr);
+	LOG_RAW_STRING("\n\rSource Data\n\r");
+	LOG_RAW_DATA(src_addr,test_transfer_length);
+	LOG_RAW_STRING("\n\rDest Addr: ");
+	LOG_RAW_INT(dst_addr);
+	LOG_RAW_STRING("\n\rDest Data\n\r");
+	LOG_RAW_DATA(dst_addr,test_transfer_length);*/
+

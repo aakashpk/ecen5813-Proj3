@@ -11,6 +11,7 @@
 #include "MKL25Z4.h"
 #include <stdlib.h>
 
+extern uint8_t mem_buffer[5000];
 
 void DMA_Init(void);
 

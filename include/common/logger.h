@@ -13,7 +13,7 @@
 #include "conversion.h"
 #include <sys/time.h>
 
-#define KL25Z
+//#define KL25Z
 
 
 
@@ -48,8 +48,8 @@ typedef struct log_data {
 	size_t logLength;
 	void* payload;
 	uint8_t checksum;
-} logdata_t;
-
+} __attribute__((packed)) logdata_t;
+//
 void log_integer(int data);
 
 logdata_t * createLog(logdata_t *logData , logid_t logID, uint32_t timestamp , size_t logLength, void* payload);

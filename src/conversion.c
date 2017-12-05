@@ -7,7 +7,7 @@
 #include"conversion.h"
 
 
-char raw[]={"0123456789ABCDEF"} ; // base string to convert numbers to characters
+const char raw[16]={"0123456789ABCDEF"} ; // base string to convert numbers to characters
 
 uint8_t my_itoa(int32_t data,uint8_t * ptr, uint32_t base)
 {

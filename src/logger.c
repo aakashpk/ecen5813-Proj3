@@ -9,7 +9,8 @@
 
 # include "logger.h"
 #define TEN 10
-#define KL25Z
+
+//#define KL25Z
 
 int j=0;
 

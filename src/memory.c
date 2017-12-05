@@ -9,28 +9,34 @@
 
 int i=0;// index used in for loops
 
+#pragma GCC push
+#pragma GCC optimize("O3")
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length){
 	
 	if(src!=NULL && dst!=NULL && length>0) // Check for NULL pointer and valid length
 	{
-		mem_buffer= (uint8_t*)reserve_words(length); // setup a seperate buffer variable to prevent copy over
-		// copy the source location into the buffer
-		for(i=0;i<length;i++)
+		if((src+length)>dst && (dst+length)>(src+length)) // Address overlap where corruption can occur if straight copied
+		// Then copy from the opposite end to avoid corruption
 		{
-			*(mem_buffer+i)=*(src+i);
+			for(i=(length-1);i>=0;i--)
+			{
+				*(dst+i)=*(src+i);
+			}
+
 		}
-		// copy buffer into destination location
-		for(i=0;i<length;i++)
+		else
 		{
-			*(dst+i)=*(mem_buffer+i);
+			for(i=0;i<length;i++)
+			{
+				*(dst+i)=*(src+i);
+			}
 		}
 		
-		free_words( (uint32_t*)mem_buffer );	
-	
 		return dst;
 	}
 	else return 0;  // return 0 in case of NULL pointer or invalid length
 }
+#pragma GCC pop
 
 uint8_t * my_memcpy(uint8_t * src, uint8_t *dst, size_t length){
 	

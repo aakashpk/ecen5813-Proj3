@@ -1,4 +1,4 @@
-#ifndef KL25Z
+#ifndef KL25Z1
 
 #include "debug.h"
 #include "memory.h"
@@ -28,7 +28,7 @@ int main()
 #ifdef PROJECT3
 	#define NOPRINTDEFAULT
 	#include "project3.h"
-	PROJECT3_RUN();
+	project3();
 #endif
 
 // Default message when no project compile time switch given, help on how to add the project compile time switch
@@ -51,7 +51,7 @@ return 0;
 int main()
 {
 
-	project3_kl25z();
+	project3();
 	
 
 return 0;

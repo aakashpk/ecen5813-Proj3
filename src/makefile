@@ -98,7 +98,7 @@ else
 ifeq ($(PLATFORM),KL25Z)
 CC = arm-none-eabi-gcc
 SIZETOOL=arm-none-eabi-size
-DS=KL25Z
+DS=KL25Z1
 INCLUDES+=-I ../include/CMSIS\
 	-I ../include/kl25z
 KL25ZCFLAG=-mthumb\

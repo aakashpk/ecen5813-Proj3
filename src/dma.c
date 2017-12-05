@@ -8,8 +8,13 @@
 #include "dma.h"
 #include "led.h"
 
-uint8_t temporary_buffer[5000],two_byte_buffer[2],four_byte_buffer[4];
+
+
+uint8_t two_byte_buffer[2],four_byte_buffer[4];
 size_t curmovelength=0,lastmovelength=0,checkval;
+
+uint8_t mem_buffer[5000];
+
 
 void DMA_Init(){
 	// Enable clock gate for DMAMUX and DMA
@@ -87,7 +92,7 @@ uint8_t * my_memset_dma_size(uint8_t * src, size_t length, uint8_t value,uint8_t
 			DMA_DCR0|=DMA_DCR_SSIZE(1);
 			DMA_DCR0|=DMA_DCR_DSIZE(1);
 
-			DMA_SAR0=&value;; //DMA Source register to value
+			DMA_SAR0=&value; //DMA Source register to value
 		}
 
 
@@ -157,7 +162,7 @@ uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_
 
 		//Move data into a temporary buffer to prevent overwrite in case of address overlap
 		DMA_SAR0=src; //DMA Source register to src value
-		DMA_DAR0=temporary_buffer; //DMA destination register to dst value
+		DMA_DAR0=mem_buffer; //DMA destination register to dst value
 		DMA_DSR_BCR0=DMA_DSR_BCR_BCR(length); //length of data to be transferred to BCR
 		DMA_DCR0|=DMA_DCR_START_MASK; // Start DMA transfer
 
@@ -165,7 +170,7 @@ uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_
 		while(!(DMA_DSR_BCR0 & DMA_DSR_BCR_DONE_MASK)) ;
 
 		// Transfer data from buffer to destination address
-		DMA_SAR0=temporary_buffer; //DMA Source register to src value
+		DMA_SAR0=mem_buffer; //DMA Source register to src value
 		DMA_DAR0=dst; //DMA destination register to dst value
 		DMA_DSR_BCR0=DMA_DSR_BCR_BCR(length); //length of data to be transferred to BCR
 

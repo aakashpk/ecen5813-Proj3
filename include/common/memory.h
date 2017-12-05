@@ -14,7 +14,7 @@
 #define ONE 1
 #define ZERO 0
 
-uint8_t * mem_buffer;
+
 uint8_t temp;
 
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length);

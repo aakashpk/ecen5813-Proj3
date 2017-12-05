@@ -13,21 +13,19 @@
 #include "logger.h"
 #include "memory.h"
 #include "logger_queue.h"
+#include "profiler.h"
 
-#define KL25Z
+
+//#define KL25Z
 
 
 #ifdef KL25Z
 #include "dma.h"
-#include "profiler.h"
 
-#define PROJECT3_RUN project3_kl25z
-
-void project3_kl25z(void);
+void project3(void);
 
 #else
 
-#define PROJECT3_RUN project3
 	
 void project3(void);
 
