@@ -22,14 +22,8 @@
 #ifdef KL25Z
 #include "dma.h"
 
-void project3(void);
-
-#else
-
+#endif
 	
 void project3(void);
 
 
-
-
-#endif

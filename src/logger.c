@@ -7,7 +7,7 @@
 */
 
 
-# include "logger.h"
+#include "logger.h"
 #define TEN 10
 
 //#define KL25Z
@@ -44,14 +44,16 @@ void log_integer(int data){
 	LOG_RAW_DATA(buffer,length);
 }
 
-logdata_t * createLog(logdata_t *logData , logid_t logID, uint32_t timestamp , size_t logLength, void* payload)
+logdata_t * createLog(logid_t logID, size_t logLength, void* payload)
 {
-	logData->logID=logID;
-	logData->timestamp=timestamp;
-	logData->logLength=logLength;
-	logData->payload=payload;
-	logData->checksum=calc_checksum(logID,timestamp,logLength,payload);
-	return logData;
+	// make critical section
+	logData.logID=logID;
+	logData.timestamp=getlogtime();
+	logData.logLength=logLength;
+	logData.payload=payload;
+	logData.checksum=calc_checksum(logData.logID,logData.timestamp,logData.logLength,logData.payload);
+	// 
+	return &logData;
 }
 
 
@@ -103,5 +105,10 @@ void log_string(char * src){
 	}
 }
 
+uint32_t getlogtime()
+{
+		gettimeofday(&log_time,NULL);
+		return log_time.tv_usec;
+}
 
 #endif

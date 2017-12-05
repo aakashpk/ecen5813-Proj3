@@ -49,15 +49,20 @@ typedef struct log_data {
 	void* payload;
 	uint8_t checksum;
 } __attribute__((packed)) logdata_t;
-//
+
+// One common container to pass logs to the log item function
+logdata_t logData;
+
+
 void log_integer(int data);
 
-logdata_t * createLog(logdata_t *logData , logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
+logdata_t * createLog(logid_t logID, size_t logLength, void* payload);
 
 uint8_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
 
 #ifdef KL25Z
 #include "uart.h"
+#include "rtc.h"
 
 #define LOG_RAW_DATA(data, len) log_data_uart(data, len)
 #define LOG_RAW_STRING(string) log_string_uart(string)
@@ -73,6 +78,8 @@ void log_string_uart(char * src);
 #define LOG_RAW_DATA(data, len) log_data(data, len)
 #define LOG_RAW_STRING(string) log_string(string)
 #define LOG_RAW_INT(data) log_integer(data)	
+
+struct timeval log_time;	
 	
 /**
 @brief Outputs a 
@@ -84,7 +91,7 @@ void log_data(uint8_t * src, size_t length);
 
 void log_string(char * src);
 
-
+uint32_t getlogtime();
 
 #endif	
 

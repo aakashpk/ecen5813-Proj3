@@ -28,7 +28,8 @@ typedef enum
 	buffer_empty,
 	buffer_full,
 	success,
-	null_error
+	null_error,
+	ok
 }CB_status;
 
 

@@ -269,7 +269,7 @@ CB_status CB_is_full(CB_t* source_ptr)
 		{
 			return buffer_full;
 		}
-		else return null_error;
+		else return ok;
 	}
 }
 
@@ -304,7 +304,7 @@ CB_status CB_is_empty(CB_t* source_ptr)
 		{	
 			return buffer_empty;
 		}
-		else return null_error;
+		else return ok;
 	}
 }
 

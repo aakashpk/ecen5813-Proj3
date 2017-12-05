@@ -12,6 +12,22 @@
 #include "circularbuffer.h"
 #include "logger.h"
 
+#ifdef KL25Z
+	#include "MKL25Z4.h"
+
+	// defining critical sections
+
+	#define START_CRITICAL() __disable_irq()
+	#define END_CRITICAL() __enable_irq()
+
+#else
+	//
+
+	#define START_CRITICAL() {}
+	#define END_CRITICAL() {}
+
+#endif
+
 //#define LOG_ITEM() log_add(createLog())
 
 typedef struct
@@ -45,6 +61,8 @@ void print_log(logdata_t *logData);
 
 */
 CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr);
+
+CB_status log_is_full(CB_log_t* source_ptr);
 
 CB_status log_is_empty(CB_log_t* source_ptr);
 

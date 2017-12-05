@@ -38,68 +38,47 @@ CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 
 
 
-CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr){
+CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
+{
 	
 		/*checks for null pointer */
-
-	if(source_ptr==NULL)
-	{
-		return null_error;
-	}
-
-	else
-	{	/*Checks if the buffer is full */ 
-
-		if(source_ptr->count == source_ptr->length)
-
-		{	
-			return buffer_full;
-			
-
-		}
-		else
+	if(log_is_full(source_ptr)==ok)
 		{	/* For adding when the buffer is not full */
-
+			START_CRITICAL();
+			
 			if(source_ptr->head>source_ptr->limit)
-			{	source_ptr->head=source_ptr->base;
+			{	
+				source_ptr->head=source_ptr->base;
 				*(source_ptr->head)=*logVal;
 				source_ptr->head+=1;
-				
 	   		}
 			else
 			{
-
 				*(source_ptr->head)=*logVal;
 				source_ptr->head+=1;
-				
-				
 			}
 
+			source_ptr->count++;
 			
-
+			END_CRITICAL();
+			
+			return success;
 		}
-	source_ptr->count++;
+	else 
+		return log_is_full(source_ptr);
 
-	return success;
-	}
-
+	
 }
+
+
 
 
 CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr)
 {
-	/*checks for null pointer */
-	 
-	if(source_ptr==NULL)
-	{
-		return null_error;
-	}
-
-	else
-	{	if(source_ptr->count==0)
-		{
-			return buffer_empty;
-		}
+	if(log_is_empty(source_ptr)==ok)
+	{	
+		START_CRITICAL(); // Start of critical section
+		
 		/* gets the value that is removed */
 		* logValue = *(source_ptr->tail);
 		
@@ -107,23 +86,21 @@ CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr)
 
 		if(source_ptr->tail==source_ptr->limit)
 		{
-
 			source_ptr->tail=source_ptr->base;
-			
 		}
 		else 
 		{ 
-
 			/* for regular cases other than the corner cases */	
-
 			source_ptr->tail+=1;
-
-			
 		}
 		source_ptr->count--;
-
+		
+		END_CRITICAL(); // end of critical section
+		
 		return success;
 	}
+	else 
+		return log_is_empty(source_ptr);
 }
 
 
@@ -155,12 +132,10 @@ void print_log(logdata_t *logData)
 	
 }
 
-CB_status log_is_empty(CB_log_t* source_ptr)
+CB_status log_is_empty(CB_log_t* source_ptr) // make this inline
 {
 
 	/*checks for null pointer */
-
-
 	if(source_ptr==NULL)
 	{
 		return null_error;
@@ -174,11 +149,11 @@ CB_status log_is_empty(CB_log_t* source_ptr)
 		{	
 			return buffer_empty;
 		}
-		else return null_error;
+		else return ok;
 	}
 }
 
-CB_status log_is_full(CB_log_t* source_ptr)
+CB_status log_is_full(CB_log_t* source_ptr) // make this inline
 {	
 
 	/*checks for null pointer */
@@ -198,7 +173,7 @@ CB_status log_is_full(CB_log_t* source_ptr)
 		{
 			return buffer_full;
 		}
-		else return null_error;
+		else return ok; // if buffer is not full and valid pointer is passed , return ok
 	}
 }
 
