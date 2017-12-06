@@ -14,9 +14,10 @@
 #include<stdlib.h>
 #include"MKL25Z4.h"
 
+void nrf_cs_enable();
+void nrf_cs_disable();
+void nrf_powerup();
 
-
-void gpio_nrf_init();
 /**
 @brief Configures the GPIO pins for nrf and spi modules
 @param none

@@ -11,11 +11,13 @@
 
 #include"MKL25Z4.h"
 #include<stdint.h>
-
-#define nrf_cs_enable() (PTA_BASE_PCR->PCOR|=1<<14)
-#define nrf_cs_DISable() (PTA_BASE_PCR->PSOR|=1<<14)
-#define nrf_status_reg() (0x00)
-#define nrf_config_reg() (0x07)
+#include<stdlib.h>
+#include"spi.h"
+#include"gpio.h"
+#define nrf_status_reg() (0x07)
+#define nrf_config_reg() (0x00)
+#define r_register (0x00)
+#define w_register (0x20)
 #define nrf_rf_ch_reg() (0x05)
 #define nrf_rf_setup_reg() (0x06)
 #define nrf_tx_addr_reg() (0x10)

@@ -9,7 +9,7 @@
 
 
 #include"nordic.h"
-
+#include"gpio.h"
 
 /**
 @brief Reads the value from the given register address
@@ -21,15 +21,19 @@ uint8_t nrf_read_register(uint8_t reg)
 
 
 nrf_cs_enable();
-uint8_t data_0;
-uint8_t* byte_write=malloc(sizeof(uint8_t));
-*byte_write=reg
+uint8_t* data_read=malloc(1*sizeof(uint8_t));
+uint8_t* byte_write=malloc(2*sizeof(uint8_t));
+*byte_write=r_register | reg;
 SPI_write_byte(byte_write);
-data_0=SPI0_D;
-nrf_cs_disable();
+*data_read=SPI0_D;
+*(byte_write+1)=0xFF;
+SPI_write_byte((byte_write+1));
+
+*(data_read)=SPI0_D;
+//nrf_cs_disable();
 free(byte_write);
 nrf_cs_disable();
-return data_0;
+return *(data_read+1);
 }
 
 
@@ -45,7 +49,7 @@ void nrf_write_register(uint8_t reg,uint8_t value)
 {
 nrf_cs_enable();
 uint8_t* byte_tosend=malloc(2*sizeof(uint8_t));
-*byte_tosend=reg;
+*byte_tosend=w_register | reg;
 *(byte_tosend+1)=value;
 SPI_write_byte(byte_tosend);
 SPI_write_byte((byte_tosend+1));
@@ -65,7 +69,7 @@ free(byte_tosend);
 uint8_t nrf_read_status()
 {
 uint8_t reg=nrf_status_reg();
-uint8_t value_status=nrf_read_register(reg)
+uint8_t value_status=nrf_read_register(reg);
 return value_status;
 }
 
@@ -81,7 +85,7 @@ uint8_t nrf_read_config()
 {
 uint8_t reg=nrf_config_reg();
 uint8_t value_config=nrf_read_register(reg);
-return value_status;
+return value_config;
 }
 
 
@@ -96,7 +100,7 @@ void nrf_write_config()
 {
 uint8_t reg,value;
 reg=nrf_config_reg();
-value=nrf_nop();
+value=0x08; //nrf_nop();
 nrf_write_register(reg,value);
 
 }
@@ -112,8 +116,8 @@ nrf_write_register(reg,value);
 uint8_t nrf_read_rf_setup()
 {
 uint8_t reg=nrf_rf_setup_reg();
-uint8_t value_config=nrf_read_register(reg);
-return value_status;
+uint8_t value_rf_setup=nrf_read_register(reg);
+return value_rf_setup;
 }
 
 
@@ -127,7 +131,7 @@ void nrf_write_rf_setup()
 {
 uint8_t reg,value;
 reg=nrf_rf_setup_reg();
-value=nrf_nop();
+value=0x1f;                            //nrf_nop();
 nrf_write_register(reg,value);
 
 }
@@ -142,8 +146,8 @@ nrf_write_register(reg,value);
 uint8_t nrf_read_rf_ch()
 {
 uint8_t reg=nrf_rf_ch_reg();
-uint8_t value_config=nrf_read_register(reg);
-return value_status;
+uint8_t value_rf_ch=nrf_read_register(reg);
+return value_rf_ch;
 }
 
 
@@ -156,7 +160,7 @@ void nrf_write_rf_ch()
 {
 uint8_t reg,value;
 reg=nrf_rf_ch_reg();
-value=nrf_nop();
+value=0x02;                   //nrf_nop();
 nrf_write_register(reg,value);
 
 }
@@ -173,7 +177,7 @@ uint8_t nrf_read_fifo_status()
 {
 uint8_t reg=nrf_fifo_status_reg();
 uint8_t value_fifo_status=nrf_read_register(reg);
-return value_status;
+return value_fifo_status;
 }
 
 
@@ -224,15 +228,19 @@ free(byte_tosend);
 void nrf_read_tx_addr(uint8_t* tx_address)
 {
 int i;
-uint8_t* byte_tosend=malloc(5*sizeof(uint8_t));
 nrf_cs_enable();
 int reg=nrf_tx_addr_reg();
 
-for(i=0;i<5;i++)
-{
-*(byte_tosend+i)=nrf_read_register(reg)
+
+*tx_address=r_register | reg;
+SPI_write_byte(tx_address);
+uint8_t sr = SPI0_D;
+for(i=1;i<=5;i++)
+{ SPI_write_byte(0xff);
+
+*(tx_address+i)=SPI0_D;
 }
-free(byte_tosend);
+
 nrf_cs_disable();
 
 }
@@ -250,16 +258,14 @@ nrf_cs_disable();
 void nrf_write_tx_addr(uint8_t* tx_address)
 {
 int i;
-uint8_t* byte_tosend=malloc(5*sizeof(uint8_t));
 nrf_cs_enable();
-int reg=nrf_tx_addr_reg();
+tx_address=nrf_tx_addr_reg();
 
-for(i=0;i<5;i++)
+for(i=0;i<=5;i++)
 {
-SPI_write_byte((byte_tosend+i));
+SPI_write_byte((tx_address+i));
 
 }
-free(byte_tosend);
 nrf_cs_disable();
 
 }

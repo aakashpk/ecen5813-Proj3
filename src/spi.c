@@ -8,6 +8,7 @@
 
 
 #include"spi.h"
+
 // Uses UART0 on the FRDM Board
  
 /**
@@ -19,38 +20,28 @@ is working at 21Mhz. The baud rate can be set using macro in spi.h
 
 void SPI_init()
 {	
-	// Enable clock gate to SPIO in System Clock Gating Control Register
-	SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK;
-	//Disabling SPI 
-	SPI0_C1 &= SPI0_C1_SPE;	
-	// Enable port clock for portA 
-	SIM_SCGC5 |= SIM_SCGC5_PORTA(1) ;
+	SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK; // Turn on clock to SPI0 module
+	  SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK; // Turn on clock to Port D module
 	
 	// Enable the pins for the selected SPI
 
-	PORTA_PCR13 = PORT_PCR_MUX(0x1);  // for chip enable
+//	PORTC_PCR7 = PORT_PCR_MUX(0x1);  // for chip enable
 
-	PORTA_PCR14 = PORT_PCR_MUX(0x1); // Enble the spi chipselct using GPIO
+	PORTD_PCR0 = PORT_PCR_MUX(0x1); // EnAble the spi chip select using GPIO
 
-	PORTA_PCR15 = PORT_PCR_MUX(0x2); //Enable the SPI_SCK function on PTA15
+	PORTD_PCR1 = PORT_PCR_MUX(0x2); //Enable the SPI_SCK function on PTA15
 
-	PORTA_PCR16 = PORT_PCR_MUX(0x2); // Enable the SPI_MOSI function on PTA16
+	PORTD_PCR2 = PORT_PCR_MUX(0x2); // Enable the SPI_MOSI function on PTA16
 
-	PORTA_PCR17 = PORT_PCR_MUX(0x2); // Enable the SPI_MISO function on PTA17
+	PORTD_PCR3 = PORT_PCR_MUX(0x2); // Enable the SPI_MISO function on PTA17
 
-	SPI0_C1 |= SPI0_C1_MSTR_MASK;         //Enable SPI in Master mode
+	PORTD_PCR5 = PORT_PCR_MUX(0x1);
 
-	//SPI0_C1 |= SPI0_C1_SPIE_MASK;         //Enable SPI receiver interrupt
-
-	SPI0_C1 &= SPI0_C1_LSBFE_MASK;	      //Enable SPI to transmit MSB first 
-
-	//SPI0_C1 |= SPI0_C1_SPTIE_MASK;        //Enable SPI transmitter interrupt
-
-	//SPI0_C2 |= SPI0_C1_CPHA;	
-
+	SPI0_C1=0X52;
+	SPI0_C2=0X10;
 	SPI0_BR = (SPI_BR_SPPR(0X02) | SPI_BR_SPR(0X08));              //Configure the baud rate for spi based on the compile time switch
 	
-	SPI0_C1 |= SPI0_C1_SPE_MASK;	        // Enabling SPI
+	//SPI0_C1 |= SPI_C1_SPE_MASK;	        // Enabling SPI
 
 
 }
@@ -65,13 +56,12 @@ void SPI_init()
 
 void SPI_read_byte(uint8_t* byte_read)
 {
-	if(byte_read !=NULL) 
-	{	// Wait until SPRF is 1, ie data buffer is empty
-        	while(!(SPI0_S & SPI0_S_SPRF_MASK));  
+	//if(byte_read !=NULL)
+	//{	// Wait until SPRF is 1, ie data buffer is empty
+        	while(!(SPI0_S & SPI_S_SPRF_MASK));
 		//The while loop does not exit until SPRF is 1.
-		
-      		*byte_read = SPI_D; // Read data from SPI Data register 
-	}
+		*byte_read = SPI0_D; // Read data from SPI Data register
+	//}
 
 
 
@@ -92,9 +82,9 @@ void SPI_write_byte(uint8_t* byte_write)
 
 	if(byte_write !=NULL) 
 	{
-      while(!(SPI0_S & SPI0_S_SPTEF_MASK));// Wait until SPTEF is 1, ie data buffer is full  
+      while(!(SPI0_S & SPI_S_SPTEF_MASK));// Wait until SPTEF is 1, ie data buffer is full
 		//The while loop does not exit until SPTEF is 1.
-		
+		//SPI0_D = 0XA5;
       SPI0_D = *byte_write; // Write data to SPI Data register to transmit the data once buffer is empty
 	}
 
@@ -116,7 +106,7 @@ void SPI_send_packet(uint8_t * byte_tosend,size_t length)
 	if(byte_tosend!=NULL && length >0)
 	{
 		
-		for(i=0;j<length;j++)
+		for(i=0;i<length;i++)
 		{
 			SPI_write_byte((byte_tosend+i)); // Send one character at a time from the block of data
 			// The SPI_write_byte function will take care of not writing when the buffer is not empty.
@@ -140,10 +130,4 @@ void SPI_flush()
 while(SPI0_S & 0X20 != (0X20));
 
 }
-
-
-
-
-
-
 

@@ -14,9 +14,28 @@
 */
 
 
-void gpio_nrf_init()
+void nrf_cs_enable()
 {
+// Set Direction PD.0 to output
+GPIOD_PDDR |= (1<<0);
+// SET CS PIN TO ACTIVE LOW
+GPIOD_PCOR |= (1<<0);
 
 
+}
 
+
+void nrf_cs_disable()
+{
+// Set Direction PD.0 to output
+GPIOD_PDDR |= (1<<0);
+// SET CS PIN TO ACTIVE LOW
+GPIOD_PSOR |= (1<<0);
+
+
+}
+void nrf_powerup()
+{
+	GPIOD_PDDR |= (1<<5);
+	GPIOD_PSOR |= (1<<5);
 }
