@@ -43,9 +43,12 @@ void project3(void)
 	uint8_t test_data[7] = "testing";
 	
 	// Use logs like this , just change the logger enum, length and payload if present, else 0 and NULL like in next line 
-	log_add(createLog(SYSTEM_INITIALIZED,7,(uint8_t *)test_data),Logger_q);
-	log_add(createLog(PROFILING_STARTED,0,NULL),Logger_q);
+	LOG_ITEM(createLog(LOGGER_INITIALZED,7,(uint8_t *)test_data),Logger_q);
+	LOG_ITEM(createLog(PROFILING_STARTED,0,NULL),Logger_q);
+	LOG_ITEM(createLog(HEART_BEAT,0,NULL),Logger_q);
+	LOG_ITEM(createLog(PROFILING_STARTED,7,(uint8_t *)test_data),Logger_q);
 	
+	//LOG_RAW_INT(Logger_q->count);
 	log_flush(Logger_q);
 	LOG_RAW_STRING("\nDONE\n");
 
@@ -54,14 +57,7 @@ void project3(void)
 
 
 /*
-	struct timeval time_value1;
-	gettimeofday(&time_value1,NULL);
-	uint8_t test_data[7] = "testing";
-	log_add(createLog(logData,SYSTEM_INITIALIZED,time_value.tv_usec,7,(uint8_t *)test_data),Logger_q);
-	log_add(createLog(logData,PROFILING_STARTED,time_value.tv_usec,0,NULL),Logger_q);
-	
 
-	uint8_t test_data[7] = "testing";
 	//LOG_RAW_STRING("\n\rInitialized \r\n");
 	//LOG_RAW_STRING("\n\r");
 

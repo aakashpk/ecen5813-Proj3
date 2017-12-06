@@ -28,7 +28,7 @@
 
 #endif
 
-//#define LOG_ITEM() log_add(createLog())
+#define LOG_ITEM(logitem,logbuffer) log_add(logitem,logbuffer)
 
 typedef struct
 {	

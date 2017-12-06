@@ -1,0 +1,47 @@
+files with KL25Z defines
+logger.h
+logger.c
+project3.h
+project3.c
+profiler.c
+profiler.h
+
+
+files to add documentation
+logger.c
+logger.h
+dma.c
+dma.h
+logger_queue.h
+project3.c
+project3.h
+profiler.c
+profiler.h
+
+
+//extern const char logId_texts[18][23];
+
+
+%H hours in 24 hour
+%M	minute 
+%S second
+%m month
+%d date
+%y year
+
+checksum for logger - calc_checksum
+RTC for FRDM logger - rtc_init and getlogtime
+clean up getlogtime for BBB , create function gettimestamp to add time stamp to log. instead of getting time stamp  and also figure out better way. uS?
+
+--add critical section directly in the log function
+
+make the logger q 
+--and temp single log item global variables.
+
+
+add logging code
+runtime and compile time log enable disable
+
+extra credit python script
+
+try making a 5k buffer by changing linker script and using that for the intermediate in memmove, memmove DMA

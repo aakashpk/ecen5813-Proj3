@@ -114,6 +114,7 @@ void print_log(logdata_t *logData)
 		if(logData->payload ==NULL || logData->logLength <1)
 		{
 			LOG_RAW_STRING(" with No payload ");
+			LOG_RAW_STRING("\n\r");
 		}
 		else 
 		{
