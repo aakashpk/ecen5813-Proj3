@@ -8,6 +8,7 @@
 #define GREENOFF GPIOB_PSOR |= (1<<19)
 #define BLUEON GPIOD_PCOR |= (1<<1)
 #define BLUEOFF GPIOD_PSOR |= (1<<1)
+#define BLUETOGGLE GPIOD_PTOR |= (1<<1)
 
 
 /**

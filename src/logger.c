@@ -10,7 +10,7 @@
 #include "logger.h"
 #define TEN 10
 
-//#define KL25Z
+#define KL25Z
 
 int j=0;
 
@@ -57,9 +57,9 @@ logdata_t * createLog(logid_t logID, size_t logLength, void* payload)
 }
 
 
-uint8_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload)
+uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload)
 {
-	return 100;
+	return ((uint32_t)logID^timestamp^(uint32_t)logLength^(uint32_t)payload);
 }
 
 

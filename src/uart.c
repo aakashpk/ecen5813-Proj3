@@ -38,6 +38,8 @@ void UART_configure(void)
 
     UART0_BDL=(bdl_val & UART_BDL_SBR_MASK);// set bdl as defined in UART.h based on baud compile time switch
 	
+    NVIC_ClearPendingIRQ(UART0_IRQn); // Clear pending UART interrupts from NVIC ICPR register
+    NVIC_EnableIRQ(UART0_IRQn); // Enable UART0 interrupt in NVIC ISER
     UART0_C2 |= UART_C2_RIE_MASK;// Enable UART0 receive interrupt
 
     UART0_C2 |= (UART0_C2_TE_MASK| UART0_C2_RE_MASK );// Enable receiver and transmitter

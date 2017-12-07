@@ -13,7 +13,7 @@
 #include "conversion.h"
 #include <sys/time.h>
 
-//#define KL25Z
+#define KL25Z
 
 
 
@@ -58,7 +58,7 @@ void log_integer(int data);
 
 logdata_t * createLog(logid_t logID, size_t logLength, void* payload);
 
-uint8_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
+uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
 
 #ifdef KL25Z
 #include "uart.h"

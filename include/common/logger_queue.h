@@ -40,6 +40,8 @@ typedef struct
 	size_t count; // current total no of items in the buffer
 } CB_log_t;
 
+CB_log_t * Logger_q;
+
 /*
 
 */

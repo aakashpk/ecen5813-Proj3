@@ -8,6 +8,7 @@
 
 #include "logger_queue.h"
 
+//#define VERBOSE
 
 CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 {	
@@ -40,7 +41,8 @@ CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 
 CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 {
-	
+	// add dynamic logging check here.
+	{
 		/*checks for null pointer */
 	if(log_is_full(source_ptr)==ok)
 		{	/* For adding when the buffer is not full */
@@ -62,12 +64,14 @@ CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 			
 			END_CRITICAL();
 			
+			if(log_is_full(source_ptr)==buffer_full) log_flush(Logger_q);
+
 			return success;
 		}
 	else 
 		return log_is_full(source_ptr);
 
-	
+	}
 }
 
 
@@ -119,15 +123,16 @@ void print_log(logdata_t *logData)
 		else 
 		{
 			LOG_RAW_STRING(" with payload ");
-			LOG_RAW_DATA(logData->payload,logData->logLength);
+			//LOG_RAW_INT(logData->payload);
+			LOG_RAW_DATA((uint8_t *)logData->payload,((logData->logLength)*4));
 			LOG_RAW_STRING("\n\r");
 		}
 		
 	#else
 	LOG_RAW_INT(logData->timestamp);LOG_RAW_STRING(",");
 	LOG_RAW_INT(logData->logID);LOG_RAW_STRING(",");	
-	LOG_RAW_DATA(logData->payload,logData->logLength);LOG_RAW_STRING(",");
-	LOG_RAW_DATA(&(logData->checksum),1);
+	LOG_RAW_DATA((uint8_t *)logData->payload,((logData->logLength)*4));LOG_RAW_STRING(",");
+	LOG_RAW_DATA(&(logData->checksum),4);
 	LOG_RAW_STRING("\n\r");
 	#endif
 	

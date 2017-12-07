@@ -29,19 +29,26 @@ profiler.h
 %d date
 %y year
 
-checksum for logger - calc_checksum
-RTC for FRDM logger - rtc_init and getlogtime
-clean up getlogtime for BBB , create function gettimestamp to add time stamp to log. instead of getting time stamp  and also figure out better way. uS?
-
---add critical section directly in the log function
-
-make the logger q 
---and temp single log item global variables.
-
-
 add logging code
 runtime and compile time log enable disable
 
-extra credit python script
+clean up getlogtime for BBB and FRDM 
 
+extra credit python script
 try making a 5k buffer by changing linker script and using that for the intermediate in memmove, memmove DMA
+
+
+
+--checksum for logger - calc_checksum
+--RTC for FRDM logger - rtc_init and getlogtime
+
+--create function gettimestamp to add time stamp to log. instead of getting time stamp  and also figure out better way. uS?
+
+--make the logger q global
+
+
+
+
+
+--add critical section directly in the log function
+--and temp single log item global variables.

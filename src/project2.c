@@ -84,10 +84,8 @@ void project2(void)
 	
     UART_configure(); // Initialize UART0
     RGB_LED_Init(); // Initialize the LED
+
     // interrupt and NVIC functions from core_cm0plus.h
-    NVIC_ClearPendingIRQ(UART0_IRQn); // Clear pending UART interrupts from NVIC ICPR register
-    NVIC_EnableIRQ(UART0_IRQn); // Enable UART0 interrupt in NVIC ISER
-    NVIC_SetPriority(UART0_IRQn,2); //Set priority of 2 for UART0 interrupt
     __enable_irq(); // Enable global interrupts
 
 	// Initialize Receive Buffer

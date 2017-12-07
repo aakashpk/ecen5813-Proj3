@@ -5,11 +5,11 @@
 #include <stdint.h>
 #include <string.h>
 #include "logger.h"
-
+#include "conversion.h"
 
 extern const size_t transfer_lengths[4];
 
-//#define KL25Z
+#define KL25Z
 
 #ifdef KL25Z
 

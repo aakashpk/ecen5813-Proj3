@@ -21,10 +21,11 @@ void DMA_Init(){
 	SIM_SCGC6|=SIM_SCGC6_DMAMUX_MASK;
 	SIM_SCGC7|=SIM_SCGC7_DMA_MASK;
 
+	NVIC_ClearPendingIRQ(DMA0_IRQn); // Clear pending DMA interrupts from NVIC ICPR register
+	NVIC_EnableIRQ(DMA0_IRQn); // Enable DMA interrupt in NVIC ISER
 	//Enable DMA Interrupts
 	//DMA_DCR0|=DMA_DCR_EINT_MASK;
 
-	DMA_DCR0&=(~DMA_DCR_EINT_MASK);// Disable Interrupt
 }
 
 uint8_t * my_memset_dma(uint8_t * src, size_t length, uint8_t value){
