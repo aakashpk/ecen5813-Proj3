@@ -27,3 +27,5 @@
 void project3(void);
 
 
+void spi_nrf(void);
+
