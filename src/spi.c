@@ -20,9 +20,9 @@ is working at 21Mhz. The baud rate can be set using macro in spi.h
 
 void SPI_init()
 {	
-	SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK; // Turn on clock to SPI0 module
+
 	  SIM_SCGC5 |= SIM_SCGC5_PORTD_MASK; // Turn on clock to Port D module
-	
+	  SIM_SCGC4 |= SIM_SCGC4_SPI0_MASK; // Turn on clock to SPI0 module
 	// Enable the pins for the selected SPI
 
 //	PORTC_PCR7 = PORT_PCR_MUX(0x1);  // for chip enable
@@ -37,10 +37,10 @@ void SPI_init()
 
 	PORTD_PCR5 = PORT_PCR_MUX(0x1);
 
-	SPI0_C1=0X52;
+	SPI0_C1=0X50;
 	SPI0_C2=0X10;
-	SPI0_BR = (SPI_BR_SPPR(0X02) | SPI_BR_SPR(0X08));              //Configure the baud rate for spi based on the compile time switch
-	
+	//SPI0_BR = (SPI_BR_SPPR(0X02) | SPI_BR_SPR(0X08));              //Configure the baud rate for spi based on the compile time switch
+	SPI0_BR = 0X00;
 	//SPI0_C1 |= SPI_C1_SPE_MASK;	        // Enabling SPI
 
 
@@ -128,6 +128,6 @@ void SPI_flush()
 {
 
 while(SPI0_S & 0X20 != (0X20));
-
+SPI_init();
 }
 

@@ -12,23 +12,6 @@
 #include<stdlib.h>
 #include"MKL25Z4.h"
 
-//#define BAUD 38400
-
-//#if(BAUD==9600)
-
-//#define spibaud = 0x22
-//#endif
-
-
-//#if(BAUD==115200)
-//#define	spibaud = 0X41
-//#endif
-
-//#if(BAUD==38400)
-//#define spibaud() (0x12)
-
-//#endif
-
 
 void SPI_init();
 /**
