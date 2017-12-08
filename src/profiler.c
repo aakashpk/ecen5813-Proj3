@@ -1,7 +1,9 @@
 #include "profiler.h"
+#define TEN 10
 
 const size_t transfer_lengths[4]={10,100,1000,5000};
-size_t start_count=0,end_count=0,profile_result=0;
+size_t start_count=0,end_count=0,profile_result_length;
+uint8_t	profile_result[24][10];//,profile_result2[10],profile_result3[10],profile_result4[10],profile_result5[10],profile_result6[10];
 
 
 #define KL25Z
@@ -32,8 +34,8 @@ size_t start_count=0,end_count=0,profile_result=0;
 			my_memmove_dma(src_addr,dst_addr,transfer_lengths[i]);
 			end_count=getcount();
 
-			profile_result=disp_val;
-			LOG_ITEM(createLog(PROFILING_RESULT,1,(size_t *)profile_result),Logger_q);
+			profile_result_length=my_itoa(disp_val,profile_result[0+i],TEN);
+			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[0+i]),Logger_q);
 			
 			#ifdef PROFILERESULT
 			LOG_RAW_INT(transfer_lengths[i]);LOG_RAW_STRING("Bytes\n\r");
@@ -59,8 +61,8 @@ size_t start_count=0,end_count=0,profile_result=0;
 				my_memset_dma(src_addr,transfer_lengths[i],65);
 				end_count=getcount();
 				
-				profile_result=disp_val;
-				LOG_ITEM(createLog(PROFILING_RESULT,1,(size_t *)profile_result),Logger_q);
+				profile_result_length=my_itoa(disp_val,profile_result[4+i],TEN);
+				LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[4+i]),Logger_q);
 
 				#ifdef PROFILERESULT
 				LOG_RAW_INT(transfer_lengths[i]);LOG_RAW_STRING("Bytes\n\r");
@@ -94,8 +96,8 @@ void profiling_my_memset(uint8_t * src_addr)
 			my_memset(src_addr,transfer_lengths[i],65);
 			end_count=getcount();
 			
-			profile_result=disp_val;
-			LOG_ITEM(createLog(PROFILING_RESULT,1,(size_t *)profile_result),Logger_q);
+			profile_result_length=my_itoa(disp_val,profile_result[8+i],TEN);
+			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[8+i]),Logger_q);
 
 			#ifdef PROFILERESULT
 			LOG_RAW_INT(transfer_lengths[i]);LOG_RAW_STRING("Bytes\n\r");
@@ -120,8 +122,8 @@ void profiling_memset(uint8_t * src_addr)
 			memset(src_addr,65,transfer_lengths[i]);
 			end_count=getcount();
 			
-			profile_result=disp_val;
-			LOG_ITEM(createLog(PROFILING_RESULT,1,(size_t *)profile_result),Logger_q);
+			profile_result_length=my_itoa(disp_val,profile_result[12+i],TEN);
+			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[12+i]),Logger_q);
 
 			#ifdef PROFILERESULT
 			LOG_RAW_INT(transfer_lengths[i]);LOG_RAW_STRING("Bytes\n\r");
@@ -147,8 +149,8 @@ void profiling_my_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 			my_memmove(src_addr,dst_addr,transfer_lengths[i]);
 			end_count=getcount();
 			
-			profile_result=disp_val;
-			LOG_ITEM(createLog(PROFILING_RESULT,1,(size_t *)profile_result),Logger_q);
+			profile_result_length=my_itoa(disp_val,profile_result[16+i],TEN);
+			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[16+i]),Logger_q);
 
 			#ifdef PROFILERESULT
 			LOG_RAW_INT(transfer_lengths[i]);LOG_RAW_STRING("Bytes\n\r");
@@ -173,8 +175,8 @@ void profiling_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 			memmove((uint8_t*)src_addr,(uint8_t *)dst_addr,transfer_lengths[i]);
 			end_count=getcount();
 			
-			profile_result=disp_val;
-			LOG_ITEM(createLog(PROFILING_RESULT,1,(size_t *)profile_result),Logger_q);
+			profile_result_length=my_itoa(disp_val,profile_result[20+i],TEN);
+			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[20+i]),Logger_q);
 
 			#ifdef PROFILERESULT
 			LOG_RAW_INT(transfer_lengths[i]);LOG_RAW_STRING("Bytes\n\r");

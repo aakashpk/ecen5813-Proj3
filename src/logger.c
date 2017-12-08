@@ -45,22 +45,23 @@ void log_integer(int data){
 	LOG_RAW_DATA(itoa_buffer,length);
 }
 
-logdata_t * createLog(logid_t logID, size_t logLength, void* payload)
+logdata_t * createLog(logid_t logID, size_t logLength, void * payload)
 {
 	// make critical section
 	logData.logID=logID;
 	logData.timestamp=getlogtime();
 	logData.logLength=logLength;
 	logData.payload=payload;
+
 	logData.checksum=calc_checksum(logData.logID,logData.timestamp,logData.logLength,logData.payload);
 	// 
 	return &logData;
 }
 
 
-uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload)
+uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void * payload)
 {
-	return ((uint32_t)logID^timestamp^(uint32_t)logLength^(uint32_t)payload);
+	return ((uint32_t)logID+timestamp+(uint32_t)logLength+(uint32_t)payload);
 }
 
 

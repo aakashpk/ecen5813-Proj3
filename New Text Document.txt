@@ -30,11 +30,15 @@ profiler.h
 %y year
 
 add logging code
+integrate project2 code as well
 runtime and compile time log enable disable
-
+make buffer full and buffer empty inline functions
 clean up getlogtime for BBB and FRDM 
 
 extra credit python script
+documentation
+
+recheck numbers once, if possible average
 ** try making a 5k buffer by changing linker script and using that for the intermediate in memmove, memmove DMA
 
 

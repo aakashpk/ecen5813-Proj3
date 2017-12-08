@@ -46,8 +46,8 @@ typedef struct log_data {
 	logid_t logID;
 	uint32_t timestamp;
 	size_t logLength;
-	void* payload;
-	uint8_t checksum;
+	uint8_t * payload;
+	uint32_t checksum;
 } __attribute__((packed)) logdata_t;
 
 // One common container to pass logs to the log item function
@@ -56,9 +56,9 @@ logdata_t logData;
 
 void log_integer(int data);
 
-logdata_t * createLog(logid_t logID, size_t logLength, void* payload);
+logdata_t * createLog(logid_t logID, size_t logLength, void * payload);
 
-uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void* payload);
+uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void * payload);
 
 #ifdef KL25Z
 #include "uart.h"

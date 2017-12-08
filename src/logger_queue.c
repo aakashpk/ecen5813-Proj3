@@ -10,6 +10,8 @@
 
 #define VERBOSE
 
+logdata_t logData;//=malloc(sizeof(logdata_t));
+
 CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 {	
 	/*checks for null pointer */
@@ -41,7 +43,7 @@ CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 
 CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 {
-	// add dynamic logging check here.
+	//if(log_enable)
 	{
 		/*checks for null pointer */
 	if(log_is_full(source_ptr)==ok)
@@ -123,16 +125,16 @@ void print_log(logdata_t *logData)
 		else 
 		{
 			LOG_RAW_STRING(" with payload ");
-			//LOG_RAW_INT(logData->payload);
-			LOG_RAW_DATA((uint8_t *)logData->payload,((logData->logLength)*4));
+			LOG_RAW_DATA((uint8_t *)logData->payload,(logData->logLength));
 			LOG_RAW_STRING("\n\r");
 		}
 		
 	#else
 	LOG_RAW_INT(logData->timestamp);LOG_RAW_STRING(",");
 	LOG_RAW_INT(logData->logID);LOG_RAW_STRING(",");	
-	LOG_RAW_DATA((uint8_t *)logData->payload,((logData->logLength)*4));LOG_RAW_STRING(",");
-	LOG_RAW_DATA(&(logData->checksum),4);
+	if(logData->payload!=NULL) LOG_RAW_DATA((uint8_t *)logData->payload,(logData->logLength));
+	LOG_RAW_STRING(",");
+	LOG_RAW_DATA((uint8_t*)&(logData->checksum),4);
 	LOG_RAW_STRING("\n\r");
 	#endif
 	
@@ -185,12 +187,11 @@ CB_status log_is_full(CB_log_t* source_ptr) // make this inline
 
 void log_flush(CB_log_t *  source_ptr){
 	
-	logdata_t * logData=malloc(sizeof(logdata_t));
 	
 	while(log_is_empty(source_ptr)!=buffer_empty)
 	{
-		log_remove(logData,source_ptr);
-		print_log(logData);
+		log_remove(&logData,source_ptr);
+		print_log(&logData);
 	}
 	
 }

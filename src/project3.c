@@ -15,15 +15,18 @@
 
 void project3(void)
 {
-	if()
-	Logger_q=malloc(sizeof(CB_log_t));
-	logdata_t * logData = malloc(sizeof(logdata_t));
+	//if(log_enable)
+	{
+		Logger_q=malloc(sizeof(CB_log_t));
+		logdata_t * logData = malloc(sizeof(logdata_t));
 
-	#ifdef KL25Z
-	RTC_Init();
-	#endif
+		#ifdef KL25Z
+		RTC_Init();
+		#endif
 
-	if(CB_log_init(Logger_q,10) == success) LOG_ITEM(createLog(LOGGER_INITIALZED,0,NULL),Logger_q);
+
+		if(CB_log_init(Logger_q,3) == success) LOG_ITEM(createLog(LOGGER_INITIALZED,0,NULL),Logger_q);
+	}
 
 
 	#ifdef KL25Z
@@ -35,10 +38,10 @@ void project3(void)
 	NVIC_SetPriority(RTC_Seconds_IRQn,0);
 	NVIC_SetPriority(DMA0_IRQn,2); //Set priority of 1 for DMA interrupt
 	NVIC_SetPriority(UART0_IRQn,4); //Set priority of 2 for UART0 interrupt
-	__enable_irq(); // Enable global interrupts
+	//__enable_irq(); // Enable global interrupts
 	
 	#endif
-	LOG_RAW_INT(14);
+
 	LOG_ITEM(createLog(SYSTEM_INITIALIZED,0,NULL),Logger_q);
 
 	//malloc 2 buffers for setting up profiling transfers
@@ -53,6 +56,7 @@ void project3(void)
 	free(src_addr);
 	free(dst_addr);
 	
+
 	/*
 	while(1)
 	{
