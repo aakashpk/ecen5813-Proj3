@@ -36,12 +36,13 @@ char logId_texts[18][23] = {
 };	
 
 
+uint8_t itoa_buffer[10]; // allocating a buffer of length 10 as 32 bit int will have max 10 characters
 
 void log_integer(int data){
-	uint8_t * buffer = (uint8_t *)calloc(TEN,sizeof(char)); // allocating a buffer of length 10 as 32 bit int will have max 10 characters
+
 	size_t length;
-	length=my_itoa(data,buffer,TEN); // Converting in base 10
-	LOG_RAW_DATA(buffer,length);
+	length=my_itoa(data,itoa_buffer,TEN); // Converting in base 10
+	LOG_RAW_DATA(itoa_buffer,length);
 }
 
 logdata_t * createLog(logid_t logID, size_t logLength, void* payload)

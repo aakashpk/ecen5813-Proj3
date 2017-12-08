@@ -15,6 +15,7 @@
 
 void project3(void)
 {
+	if()
 	Logger_q=malloc(sizeof(CB_log_t));
 	logdata_t * logData = malloc(sizeof(logdata_t));
 
@@ -37,10 +38,10 @@ void project3(void)
 	__enable_irq(); // Enable global interrupts
 	
 	#endif
-
+	LOG_RAW_INT(14);
 	LOG_ITEM(createLog(SYSTEM_INITIALIZED,0,NULL),Logger_q);
 
-	//
+	//malloc 2 buffers for setting up profiling transfers
 	uint8_t * src_addr=malloc(5000),* dst_addr=malloc(5000);
 	
 	//
@@ -48,6 +49,7 @@ void project3(void)
 	
 	//
 	profiling_memory_functions(src_addr,dst_addr);
+	// free the allocated pointers after profiling is done
 	free(src_addr);
 	free(dst_addr);
 	

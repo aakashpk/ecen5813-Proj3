@@ -8,7 +8,7 @@
 
 #include "logger_queue.h"
 
-//#define VERBOSE
+#define VERBOSE
 
 CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 {	

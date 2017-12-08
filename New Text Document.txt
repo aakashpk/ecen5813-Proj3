@@ -35,7 +35,7 @@ runtime and compile time log enable disable
 clean up getlogtime for BBB and FRDM 
 
 extra credit python script
-try making a 5k buffer by changing linker script and using that for the intermediate in memmove, memmove DMA
+** try making a 5k buffer by changing linker script and using that for the intermediate in memmove, memmove DMA
 
 
 
