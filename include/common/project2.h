@@ -20,14 +20,14 @@
 #define misc_condition1   (((*removed_data)>=1) && ((*removed_data) <=32))
 
 // Strings required to be printed on terminal every time statistics is shown
-uint8_t test_data[19]="UART0 Initialized\n\r";
-uint8_t num_alphabets[21]="\n\rNo of Alphabets is:";
-uint8_t num_integers[20]="\n\rNo of Integers is:";
-uint8_t num_punctuations[24]="\n\rNo of Punctuations is:";
-uint8_t num_specialchars[27]="\n\rNo of Misc Characters is:";
-uint8_t nextline[2]="\n\r";
+extern uint8_t test_data[19];
+extern uint8_t num_alphabets[21];
+extern uint8_t num_integers[20];
+extern uint8_t num_punctuations[24];
+extern uint8_t num_specialchars[27];
+extern uint8_t nextline[2];
 
-uint32_t display_after_lim=25; // No of characters after which statistics is displayed
+extern uint32_t display_after_lim; // No of characters after which statistics is displayed
 
 /**
 @brief uint8_t* count counts the number of alphabets,numbers,punctuations, miscellaneous characters recieved 
@@ -48,6 +48,8 @@ void project2(void);
 
 
 void project2_demo(void);
+
+void log_statistics(CB_t* source_ptr,uint32_t* char_count);
 
 
 #endif

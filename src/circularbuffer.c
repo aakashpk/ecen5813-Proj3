@@ -103,6 +103,8 @@ CB_status CB_buffer_add_item(CB_t* source_ptr,uint8_t value)
 		}
 	source_ptr->count++;
 
+	// check buffer full and log_statistics()
+
 	return success;
 	}
 }

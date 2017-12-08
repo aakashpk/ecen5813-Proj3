@@ -13,9 +13,19 @@
 
 CB_t * rx_cb,* tx_cb; // Receive and Transmit Circular Buffers
 
+// Strings required to be printed on terminal every time statistics is shown
+uint8_t test_data[19]="UART0 Initialized\n\r";
+uint8_t num_alphabets[21]="\n\rNo of Alphabets is:";
+uint8_t num_integers[20]="\n\rNo of Integers is:";
+uint8_t num_punctuations[24]="\n\rNo of Punctuations is:";
+uint8_t num_specialchars[27]="\n\rNo of Misc Characters is:";
+uint8_t nextline[2]="\n\r";
+
+uint32_t display_after_lim=25; // No of characters after which statistics is displayed
+
 uint32_t* dataprocesser(CB_t* source_ptr,uint32_t* count)
 {
-uint8_t * removed_data=(uint8_t*)malloc(sizeof(uint8_t));
+uint8_t * removed_data=(uint8_t*)malloc(sizeof(uint8_t)); // change to array;
 uint8_t index=0;
 	while(source_ptr->count >0)
 	{
@@ -48,7 +58,7 @@ uint8_t index=0;
 		
 	}
 
-
+	free(removed_data);
 return count;
 }
 
@@ -58,7 +68,7 @@ void dumpstatistics(CB_t* source_ptr,CB_t* destination_ptr,uint32_t* char_count)
 {
 	int toAddLength;
 	uint8_t toAddData[8];
-	dataprocesser(source_ptr,char_count); // run data processor on recive buffer to get the number of characters
+	dataprocesser(source_ptr,char_count); // run data processor on receive buffer to get the number of characters
 		
 		// add the calculated count to transmit buffer along with required display strings
 		for(int k=0;k<4;k++)
@@ -76,6 +86,30 @@ void dumpstatistics(CB_t* source_ptr,CB_t* destination_ptr,uint32_t* char_count)
 	    			}
 	    			CB_buffer_add_n(destination_ptr,nextline,2); // go to newline after display
 }
+
+void log_statistics(CB_t* source_ptr,uint32_t* char_count)
+{
+	uint8_t PayloadData[4][10],statLength;
+	LOG_ITEM(createLog(DATA_ANALYSIS_STARTED,0,NULL),Logger_q);
+	dataprocesser(source_ptr,char_count); // run data processor on receive buffer to get the number of characters
+
+	for(int k=0;k<4;k++)
+			{
+				statLength=my_itoa(*(char_count+k),PayloadData[k],10); // Convert the integer count to characters
+
+				// Log Character statistics
+				if(k==0) LOG_ITEM(createLog(DATA_ALPHA_COUNT,statLength,PayloadData[k]),Logger_q);
+				if(k==1) LOG_ITEM(createLog(DATA_NUMERIC_COUNT,statLength,PayloadData[k]),Logger_q);
+				if(k==2) LOG_ITEM(createLog(DATA_PUNCTUATION_COUNT,statLength,PayloadData[k]),Logger_q);
+				if(k==3) LOG_ITEM(createLog(DATA_MISC_COUNT,statLength,PayloadData[k]),Logger_q);
+
+
+			}
+
+	LOG_ITEM(createLog(DATA_ANALYSIS_COMPLETED,0,NULL),Logger_q);
+}
+
+
 
 
 void project2(void)

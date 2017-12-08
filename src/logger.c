@@ -12,6 +12,15 @@
 
 #define KL25Z
 
+#define DEBUG
+
+#ifdef DEBUG
+uint8_t log_enable=1;
+#else
+uint8_t log_enable=0;
+#endif
+
+
 int j=0;
 
 char logId_texts[18][23] = {
@@ -45,21 +54,22 @@ void log_integer(int data){
 	LOG_RAW_DATA(itoa_buffer,length);
 }
 
-logdata_t * createLog(logid_t logID, size_t logLength, void * payload)
+logdata_t * createLog(logid_t logID, size_t logLength, uint8_t * payload)
 {
-	// make critical section
-	logData.logID=logID;
-	logData.timestamp=getlogtime();
-	logData.logLength=logLength;
-	logData.payload=payload;
+	if(log_enable)
+	{
+		logData.logID=logID;
+		logData.timestamp=getlogtime();
+		logData.logLength=logLength;
+		logData.payload=payload;
+		logData.checksum=calc_checksum(logData.logID,logData.timestamp,logData.logLength,logData.payload);
+	}
 
-	logData.checksum=calc_checksum(logData.logID,logData.timestamp,logData.logLength,logData.payload);
-	// 
 	return &logData;
 }
 
 
-uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void * payload)
+uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, uint8_t * payload)
 {
 	return ((uint32_t)logID+timestamp+(uint32_t)logLength+(uint32_t)payload);
 }
@@ -79,7 +89,7 @@ void log_data_uart(uint8_t * src, size_t length)
 
 void log_string_uart(char * src){
 	j=0;
-	while(*(src+j)!='\0') // print charcters till string termination character
+	while(*(src+j)!='\0') // print characters till string termination character
 	{
 		UART_send(src+j);
 		j++;

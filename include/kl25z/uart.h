@@ -13,6 +13,7 @@
 #include"MKL25Z4.h"
 #include "circularbuffer.h"
 #include "led.h"
+#include "logger_queue.h"
 
 #define BAUD 38400
 

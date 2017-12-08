@@ -8,9 +8,10 @@
 
 #include "logger_queue.h"
 
-#define VERBOSE
+//#define VERBOSE
 
-logdata_t logData;//=malloc(sizeof(logdata_t));
+logdata_t logData;
+
 
 CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 {	
@@ -43,12 +44,12 @@ CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 
 CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 {
-	//if(log_enable)
+	if(log_enable)
 	{
 		/*checks for null pointer */
 	if(log_is_full(source_ptr)==ok)
 		{	/* For adding when the buffer is not full */
-			START_CRITICAL();
+			START_CRITICAL(); // Start of critical section
 			
 			if(source_ptr->head>source_ptr->limit)
 			{	
@@ -64,7 +65,7 @@ CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 
 			source_ptr->count++;
 			
-			END_CRITICAL();
+			END_CRITICAL(); // End of critical section
 			
 			if(log_is_full(source_ptr)==buffer_full) log_flush(Logger_q);
 
@@ -74,6 +75,8 @@ CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 		return log_is_full(source_ptr);
 
 	}
+	else
+		return no_logging;
 }
 
 
@@ -125,7 +128,7 @@ void print_log(logdata_t *logData)
 		else 
 		{
 			LOG_RAW_STRING(" with payload ");
-			LOG_RAW_DATA((uint8_t *)logData->payload,(logData->logLength));
+			LOG_RAW_DATA(logData->payload,(logData->logLength));
 			LOG_RAW_STRING("\n\r");
 		}
 		
@@ -133,57 +136,14 @@ void print_log(logdata_t *logData)
 	LOG_RAW_INT(logData->timestamp);LOG_RAW_STRING(",");
 	LOG_RAW_INT(logData->logID);LOG_RAW_STRING(",");	
 	if(logData->payload!=NULL) LOG_RAW_DATA((uint8_t *)logData->payload,(logData->logLength));
-	LOG_RAW_STRING(",");
-	LOG_RAW_DATA((uint8_t*)&(logData->checksum),4);
+		if(calc_checksum(logData->logID,logData->timestamp,logData->logLength,logData->payload)==logData->checksum) LOG_RAW_STRING(",1");
+		else LOG_RAW_STRING(",0");
+	//LOG_RAW_DATA((uint8_t)&(logData->checksum),4);
 	LOG_RAW_STRING("\n\r");
 	#endif
 	
 }
 
-CB_status log_is_empty(CB_log_t* source_ptr) // make this inline
-{
-
-	/*checks for null pointer */
-	if(source_ptr==NULL)
-	{
-		return null_error;
-	}
-	else 
-	{
-
-		/* check buffer full condition */			
-
-		if(source_ptr->count==0)
-		{	
-			return buffer_empty;
-		}
-		else return ok;
-	}
-}
-
-CB_status log_is_full(CB_log_t* source_ptr) // make this inline
-{	
-
-	/*checks for null pointer */
-
-
-	if(source_ptr==NULL)
-	{
-		return null_error;
-	}
-
-	else
-	{
-
-		/* check buffer full condition */
-
-		if(source_ptr->count==source_ptr->length)
-		{
-			return buffer_full;
-		}
-		else return ok; // if buffer is not full and valid pointer is passed , return ok
-	}
-}
 
 void log_flush(CB_log_t *  source_ptr){
 	

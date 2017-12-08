@@ -15,11 +15,11 @@
 
 #define KL25Z
 
-
+extern uint8_t log_enable;
 
 typedef enum logId {
 	LOGGER_INITIALZED,
-	GPIO_INITIALZED,
+	GPIO_INITIALIZED,
 	SYSTEM_INITIALIZED,
 	SYSTEM_HALTED,
 	INFO,
@@ -56,9 +56,9 @@ logdata_t logData;
 
 void log_integer(int data);
 
-logdata_t * createLog(logid_t logID, size_t logLength, void * payload);
+logdata_t * createLog(logid_t logID, size_t logLength, uint8_t * payload);
 
-uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, void * payload);
+uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, uint8_t * payload);
 
 #ifdef KL25Z
 #include "uart.h"

@@ -21,6 +21,7 @@ GPIOD_PDDR |= (1<<0);
 // SET CS PIN TO ACTIVE LOW
 GPIOD_PCOR |= (1<<0);
 
+LOG_ITEM(createLog(GPIO_INITIALIZED,0,NULL),Logger_q);
 
 }
 

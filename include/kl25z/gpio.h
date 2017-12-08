@@ -13,6 +13,7 @@
 #include<stdint.h>
 #include<stdlib.h>
 #include"MKL25Z4.h"
+#include "logger_queue.h"
 
 void nrf_cs_enable();
 void nrf_cs_disable();

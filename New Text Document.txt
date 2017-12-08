@@ -29,20 +29,26 @@ profiler.h
 %d date
 %y year
 
-add logging code
-integrate project2 code as well
-runtime and compile time log enable disable
-make buffer full and buffer empty inline functions
-clean up getlogtime for BBB and FRDM 
+integrate project2 well
+*clean up getlogtime for BBB and FRDM 
+UART DMA ??
 
 extra credit python script
 documentation
-
 recheck numbers once, if possible average
+
+
+--add profiling type to log
+--DMA IRQ
+--add logging code
+--runtime and compile time log enable disable
+
+
+
 ** try making a 5k buffer by changing linker script and using that for the intermediate in memmove, memmove DMA
 
 
-
+--make buffer full and buffer empty inline functions
 --checksum for logger - calc_checksum
 --RTC for FRDM logger - rtc_init and getlogtime
 

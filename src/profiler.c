@@ -3,7 +3,7 @@
 
 const size_t transfer_lengths[4]={10,100,1000,5000};
 size_t start_count=0,end_count=0,profile_result_length;
-uint8_t	profile_result[24][10];//,profile_result2[10],profile_result3[10],profile_result4[10],profile_result5[10],profile_result6[10];
+uint8_t	profile_result[24][10];
 
 
 #define KL25Z
@@ -35,6 +35,7 @@ uint8_t	profile_result[24][10];//,profile_result2[10],profile_result3[10],profil
 			end_count=getcount();
 
 			profile_result_length=my_itoa(disp_val,profile_result[0+i],TEN);
+			LOG_ITEM(createLog(INFO,10,"MemmoveDMA"),Logger_q);
 			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[0+i]),Logger_q);
 			
 			#ifdef PROFILERESULT
@@ -62,6 +63,7 @@ uint8_t	profile_result[24][10];//,profile_result2[10],profile_result3[10],profil
 				end_count=getcount();
 				
 				profile_result_length=my_itoa(disp_val,profile_result[4+i],TEN);
+				LOG_ITEM(createLog(INFO,9,"MemsetDMA"),Logger_q);
 				LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[4+i]),Logger_q);
 
 				#ifdef PROFILERESULT
@@ -97,6 +99,7 @@ void profiling_my_memset(uint8_t * src_addr)
 			end_count=getcount();
 			
 			profile_result_length=my_itoa(disp_val,profile_result[8+i],TEN);
+			LOG_ITEM(createLog(INFO,8,"MyMemset"),Logger_q);
 			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[8+i]),Logger_q);
 
 			#ifdef PROFILERESULT
@@ -123,6 +126,7 @@ void profiling_memset(uint8_t * src_addr)
 			end_count=getcount();
 			
 			profile_result_length=my_itoa(disp_val,profile_result[12+i],TEN);
+			LOG_ITEM(createLog(INFO,6,"Memset"),Logger_q);
 			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[12+i]),Logger_q);
 
 			#ifdef PROFILERESULT
@@ -150,6 +154,7 @@ void profiling_my_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 			end_count=getcount();
 			
 			profile_result_length=my_itoa(disp_val,profile_result[16+i],TEN);
+			LOG_ITEM(createLog(INFO,9,"MyMemmove"),Logger_q);
 			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[16+i]),Logger_q);
 
 			#ifdef PROFILERESULT
@@ -176,6 +181,7 @@ void profiling_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 			end_count=getcount();
 			
 			profile_result_length=my_itoa(disp_val,profile_result[20+i],TEN);
+			LOG_ITEM(createLog(INFO,7,"Memmove"),Logger_q);
 			LOG_ITEM(createLog(PROFILING_RESULT,profile_result_length,profile_result[20+i]),Logger_q);
 
 			#ifdef PROFILERESULT

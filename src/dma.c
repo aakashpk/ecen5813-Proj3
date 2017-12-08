@@ -7,6 +7,7 @@
 
 #include "dma.h"
 #include "led.h"
+#include "logger_queue.h"
 
 
 
@@ -23,8 +24,9 @@ void DMA_Init(){
 
 	NVIC_ClearPendingIRQ(DMA0_IRQn); // Clear pending DMA interrupts from NVIC ICPR register
 	NVIC_EnableIRQ(DMA0_IRQn); // Enable DMA interrupt in NVIC ISER
+
 	//Enable DMA Interrupts
-	//DMA_DCR0|=DMA_DCR_EINT_MASK;
+	DMA_DCR0|=DMA_DCR_EINT_MASK;
 
 }
 
@@ -153,13 +155,19 @@ uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_
 				DMA_DCR0|=DMA_DCR_SSIZE(2);
 				DMA_DCR0|=DMA_DCR_DSIZE(2);
 			}
-			else // Use 1 byte transfer as default, even in case of errored transfer size
+			else if(transfer_size==1)
 			{
 				DMA_DCR0|=DMA_DCR_SSIZE(1);
 				DMA_DCR0|=DMA_DCR_DSIZE(1);
 			}
+			else // Use 1 byte transfer as default, even in case of errored transfer size
+			{
+				DMA_DCR0|=DMA_DCR_SSIZE(1);
+				DMA_DCR0|=DMA_DCR_DSIZE(1);
+				LOG_ITEM(createLog(WARNING,23,"WRONG DMA TRANSFER SIZE"),Logger_q);
+			}
 
-		DMA_DSR0 |= DMA_DSR_BCR_DONE_MASK; // Reset flags in DSR by writing one to DONE bit
+		//DMA_DSR0 |= DMA_DSR_BCR_DONE_MASK; // Reset flags in DSR by writing one to DONE bit
 
 		//Move data into a temporary buffer to prevent overwrite in case of address overlap
 		DMA_SAR0=src; //DMA Source register to src value
@@ -168,7 +176,7 @@ uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_
 		DMA_DCR0|=DMA_DCR_START_MASK; // Start DMA transfer
 
 		// Wait for first DMA transfer to finish before starting second to prevent corruption of data
-		while(!(DMA_DSR_BCR0 & DMA_DSR_BCR_DONE_MASK)) ;
+		//while(!(DMA_DSR_BCR0 & DMA_DSR_BCR_DONE_MASK)) ;
 
 		// Transfer data from buffer to destination address
 		DMA_SAR0=mem_buffer; //DMA Source register to src value
@@ -192,8 +200,10 @@ uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_
 void DMA0_IRQHandler(){
 
 	DMA_DCR0&=(~DMA_DCR_EINT_MASK);
-	if(DMA_DSR0 & DMA_DSR_BCR_DONE_MASK) DMA_DSR0 |= DMA_DSR_BCR_DONE_MASK;
-	BLUEON;
+	if(DMA_DSR_BCR0 & DMA_DSR_BCR_DONE_MASK) DMA_DSR_BCR0 |= DMA_DSR_BCR_DONE_MASK;
+	LOG_ITEM(createLog(INFO,8,"DMA INTR"),Logger_q);
+	DMA_DCR0|=DMA_DCR_EINT_MASK;
+	//BLUEON;
 	//LOG_RAW_STRING("\n\rISR reached ");
 
 }

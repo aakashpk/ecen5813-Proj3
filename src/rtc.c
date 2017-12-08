@@ -33,11 +33,12 @@ void RTC_Init()
 	RTC_CR  &= ~RTC_CR_SWR_MASK;
 
 	if (RTC_SR & RTC_SR_TIF_MASK){
-		RTC_TSR = 100;  //   add build time here
+		#ifdef buildepochsec
+		RTC_TSR = buildepochsec;
+		#else
+		RTC_TSR = 0;
+		#endif//   add build time here
 	}
-
-	/*Set time compensation parameters*/
-	//RTC_TCR = RTC_TCR_CIR(1) | RTC_TCR_TCR(0xFF);
 
 	/*Enable RTC seconds irq*/
 	NVIC_ClearPendingIRQ(RTC_Seconds_IRQn);
@@ -48,9 +49,6 @@ void RTC_Init()
 
 	/*Timer enable*/
 	RTC_SR |= RTC_SR_TCE_MASK;
-
-	/*Configure the timer seconds and alarm registers*/
-	//RTC_TSR = 0xFF;
 
 }
 

@@ -162,10 +162,17 @@ void UART0_IRQHandler()
 	  {
 		b=(UART0_D); //read UART0 data register
 		CB_buffer_add_item(rx_cb,b); // Add read data to receive circular buffer
+		LOG_ITEM(createLog(DATA_RECEIVED,1,((rx_cb->head)-1)),Logger_q); // Log received character
+		if(b==27u)
+		{
+			if(log_enable) log_enable=0;
+			else log_enable=1;
+		}
 		// Interrupt is cleared when data read from the register
 		UART_send(&b); // echo received character to terminal
 	  }
 	
+	/*
 	if ((UART0_S1&UART_S1_TDRE_MASK)||(UART0_S1&UART_S1_TC_MASK))
 	{
 		while(CB_is_empty(tx_cb)!=0) // keep removing and transmitting till the buffer is empty
@@ -174,6 +181,7 @@ void UART0_IRQHandler()
 			UART_send(&b); // transmit data removed from buffer.
 		}
 
-	}
+
+	}*/
 
 }

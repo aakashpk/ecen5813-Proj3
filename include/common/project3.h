@@ -18,7 +18,6 @@
 
 #define KL25Z
 
-
 #ifdef KL25Z
 #include "dma.h"
 #include "led.h"
