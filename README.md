@@ -47,6 +47,7 @@ have upto 4 times better speeds than the O0 compiled functions. The transfers ge
 	BT:=-Dbuildepochsec=$(shell date +"%s")
 	
 	rtc.c
+	
 	#ifdef buildepochsec
 	RTC_TSR = buildepochsec; // passing the build time obtained from makefile
 	#else
