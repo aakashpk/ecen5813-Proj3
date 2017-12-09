@@ -15,15 +15,20 @@
 #include"MKL25Z4.h"
 #include "logger_queue.h"
 
-void nrf_cs_enable();
-void nrf_cs_disable();
-void nrf_powerup();
 
 /**
 @brief Configures the GPIO pins for nrf and spi modules
 @param none
 @return  none
 */
+void nrf_cs_enable();
+/**
+@brief Configures the GPIO pins for nrf and spi modules
+@param none
+@return  none
+*/
+void nrf_cs_disable();
+void nrf_powerup();
 
 
 #endif

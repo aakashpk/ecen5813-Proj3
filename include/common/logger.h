@@ -53,11 +53,35 @@ typedef struct log_data {
 // One common container to pass logs to the log item function
 logdata_t logData;
 
+/**
+@brief Logs integer data to the serial terminal 
+@param int data data to be logged
+@return  none
+*/
 
 void log_integer(int data);
 
+
+/**
+@brief Gets the  numerical calculationation on the
+different types of data recieved and send its to a queue
+@param logID pointer the structure containing details of the log 
+@param size_t length of the log
+@param uint8_t* pointer to the payload to be logged
+@return  returns the structure pointer
+*/
 logdata_t * createLog(logid_t logID, size_t logLength, uint8_t * payload);
 
+
+
+/**
+@brief Performs checksums to validate data 
+@param logID pointer the structure containing details of the log 
+@param size_t length of the log
+@param uint8_t* pointer to the payload to be logged
+@param uint32_t timestamp contains the timestamp
+@return  return the calculated checksum
+*/
 uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, uint8_t * payload);
 
 #ifdef KL25Z
@@ -68,8 +92,23 @@ uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, uin
 #define LOG_RAW_STRING(string) log_string_uart(string)
 #define LOG_RAW_INT(data) log_integer(data)
 
+
+/**
+@brief sends data to the uart
+@param uint8_t* src pointer to the data to be logged 
+@param size_t length length of the source pointer
+@return  none
+*/
+
 void log_data_uart(uint8_t * src, size_t length);
 
+
+
+/**
+@brief sends string data to the uart 
+@param char* src pointer to the data to be logged 
+@return  none
+*/
 void log_string_uart(char * src);
 
 
@@ -89,8 +128,20 @@ struct timeval log_time;
 */
 void log_data(uint8_t * src, size_t length);
 
+
+/**
+@brief logs string data for BBB
+@param char* src pointer to the data to be logged 
+@return  none
+*/
 void log_string(char * src);
 
+
+/**
+@brief gets time of the day
+@param  none 
+@return  none
+*/
 uint32_t getlogtime();
 
 #endif	

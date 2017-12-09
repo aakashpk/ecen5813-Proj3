@@ -14,6 +14,13 @@
 #ifdef KL25Z
 #include "project2.h"
 
+
+/**
+@brief Implementation function for spi-nrf interface
+@param none
+@return  none
+*/
+
 void spi_nrf(void)
 {
 			SPI_init();

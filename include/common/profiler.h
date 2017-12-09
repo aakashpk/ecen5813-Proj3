@@ -21,11 +21,25 @@ extern const size_t transfer_lengths[4];
 	#define systickzero() (SysTick->VAL= 0UL)
 	#define disp_val (start_count-end_count)
 	#define time_unit " Clock Cycles\n\r"
-
+/**
+@brief Configures the Ssystick for performing the profiling operations
+@param ticks value to initialise the systick down counter
+@return  none
+*/
 	void SysTick_Init(uint32_t ticks);
-
+/**
+@brief Does profiling for memmove using DMA
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
 	void profiling_memset_dma(uint8_t * src_addr);
 
+	/**
+@brief Does profiling for memset using DMA
+@param uint8_t * src_addr source pointer
+@return  none
+*/
 	void profiling_memmove_dma(uint8_t * src_addr,uint8_t * dst_addr);
 
 #else
@@ -43,13 +57,34 @@ extern const size_t transfer_lengths[4];
 
 #endif
 
+/**
+@brief Does profiling for memset 
+@param uint8_t * src_addr source pointer
+@return  none
+*/
 
 void profiling_my_memset(uint8_t * src_addr);
 
+/**
+@brief Does profiling for memset 
+@param uint8_t * src_addr source pointer
+@return  none
+*/
+
 void profiling_memset(uint8_t * src_addr);
-
+/**
+@brief Does profiling for memmove 
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
 void profiling_my_memmove(uint8_t * src_addr,uint8_t * dst_addr);
-
+/**
+@brief Does profiling for memmove 
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
 void profiling_memmove(uint8_t * src_addr,uint8_t * dst_addr);
 
 /*
@@ -57,6 +92,14 @@ void profiling_memmove(uint8_t * src_addr,uint8_t * dst_addr);
 Wrapper function to call all profiling functions together in project3()
 
 
+*/
+
+/**
+@brief Does profiling for all memory functions, 
+		ie calls all the individual profiling functions
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
 */
 void profiling_memory_functions(uint8_t * src_addr,uint8_t * dst_addr);
 

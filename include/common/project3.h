@@ -23,9 +23,19 @@
 #include "led.h"
 
 #endif
+/**
+@brief Implementation function for project3
+@param none
+@return  none
+*/
 	
 void project3(void);
 
+/**
+@brief Implementation function for spi-nrf interface
+@param none
+@return  none
+*/
 
 void spi_nrf(void);
 
