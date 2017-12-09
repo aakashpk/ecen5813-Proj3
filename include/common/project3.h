@@ -16,7 +16,7 @@
 #include "profiler.h"
 
 
-#define KL25Z
+//#define KL25Z
 
 #ifdef KL25Z
 #include "dma.h"
