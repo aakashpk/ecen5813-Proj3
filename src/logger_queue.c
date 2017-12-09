@@ -28,7 +28,9 @@ CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 	/*checks for null pointer */
 	if(source_ptr==NULL || length<=0)
 	{
+		LOG_ITEM(createLog(ERROR,0,NULL),Logger_q);
 		return null_error;
+		
 	}
 	else 
 	{       /* initializes the pointers to the circular buffer*/
@@ -198,7 +200,9 @@ CB_status log_is_empty(CB_log_t* source_ptr)
 		/*checks for null pointer */
 		if(source_ptr==NULL)
 		{
+			LOG_ITEM(createLog(ERROR,0,NULL),Logger_q);
 			return null_error;
+			
 		}
 		else
 		{
@@ -221,6 +225,7 @@ CB_status log_is_full(CB_log_t* source_ptr)
 
 		if(source_ptr==NULL)
 		{
+			LOG_ITEM(createLog(ERROR,0,NULL),Logger_q);
 			return null_error;
 		}
 
