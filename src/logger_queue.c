@@ -8,10 +8,20 @@
 
 #include "logger_queue.h"
 
-//#define LOGPRETTY
+//#define VERBOSE
 
 logdata_t logData;
 
+/**
+@brief  Initializes the data memebers of the CB_t structure
+        and allocates memory for the circularbuffer 
+
+@param  CB_t* source_ptr pointer to the CB_t structure
+
+@param  length gives the length of the circular buffer
+
+@return returns the status of the operation on the buffer
+*/
 
 CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 {	
@@ -40,7 +50,15 @@ CB_status CB_log_init(CB_log_t* source_ptr, size_t length)
 	
 }
 
+/**
+@brief  Adds data to the circular buffer 
 
+@param  logdata_t *logVal pointer to the CB_t structure
+
+@param  CB_log_t *source_ptr pointer to the buffer
+
+@return returns the status of the operation on the buffer
+*/
 
 CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 {
@@ -79,7 +97,15 @@ CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr)
 		return no_logging;
 }
 
+/**
+@brief  Removes data to the circular buffer 
 
+@param  CB_t* source_ptr pointer to the CB_t structure
+
+@param  logvalue gets the value to be removed from the circular buffer
+
+@return returns the status of the operation on the buffer
+*/
 
 
 CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr)
@@ -112,11 +138,14 @@ CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr)
 		return log_is_empty(source_ptr);
 }
 
-
-
+/**
+@brief prints the log data to the uart/stdio
+@param logdata_t *logData pointer to the buffer containing data to be logged
+@return none
+*/
 void print_log(logdata_t *logData)
 {
-	#ifdef LOGPRETTY
+	#ifdef VERBOSE
 	LOG_RAW_STRING(logId_texts[logData->logID]);
 	LOG_RAW_STRING(" at ");
 	LOG_RAW_INT(logData->timestamp);
@@ -144,6 +173,13 @@ void print_log(logdata_t *logData)
 	
 }
 
+
+/**
+@brief Blocks till all the data is removed from the log buffer
+@param CB_log_t* source_ptr pointer to the buffer containing data to be logged
+@return none
+*/
+
 void log_flush(CB_log_t *  source_ptr){
 	
 	
@@ -155,51 +191,6 @@ void log_flush(CB_log_t *  source_ptr){
 	
 }
 
-#ifndef KL25Z
-	CB_status log_is_empty(CB_log_t* source_ptr) 
-	{
-		/*checks for null pointer */
-		if(source_ptr==NULL)
-		{
-			return null_error;
-		}
-		else
-		{
-
-			/* check buffer full condition */
-
-			if(source_ptr->count==0)
-			{
-				return buffer_empty;
-			}
-			else return ok;
-		}
-	}
-	
-	CB_status log_is_full(CB_log_t* source_ptr)
-	{
-
-		// checks for null pointer
-
-
-		if(source_ptr==NULL)
-		{
-			return null_error;
-		}
-
-		else
-		{
-
-			// check buffer full condition
-
-			if(source_ptr->count==source_ptr->length)
-			{
-				return buffer_full;
-			}
-			else return ok; // if buffer is not full and valid pointer is passed , return ok
-		}
-	}
-#endif
 
 
 

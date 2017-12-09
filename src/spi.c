@@ -56,12 +56,12 @@ void SPI_init()
 
 void SPI_read_byte(uint8_t* byte_read)
 {
-	//if(byte_read !=NULL)
-	//{	// Wait until SPRF is 1, ie data buffer is empty
+	if(byte_read !=NULL)
+	{	// Wait until SPRF is 1, ie data buffer is empty
         	while(!(SPI0_S & SPI_S_SPRF_MASK));
 		//The while loop does not exit until SPRF is 1.
 		*byte_read = SPI0_D; // Read data from SPI Data register
-	//}
+	}
 
 
 
@@ -84,7 +84,7 @@ void SPI_write_byte(uint8_t* byte_write)
 	{
       while(!(SPI0_S & SPI_S_SPTEF_MASK));// Wait until SPTEF is 1, ie data buffer is full
 		//The while loop does not exit until SPTEF is 1.
-		//SPI0_D = 0XA5;
+		
       SPI0_D = *byte_write; // Write data to SPI Data register to transmit the data once buffer is empty
 	}
 
