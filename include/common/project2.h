@@ -1,3 +1,13 @@
+
+/**
+*@file project2.c
+*@brief project2 implementation is done from this file 
+*@Author Aakash Kumar/ArunSundar
+*@date Oct 28 2017
+
+*/
+
+
 #include<stdint.h>
 #include<stdlib.h>
 
@@ -36,6 +46,14 @@ extern uint32_t display_after_lim; // No of characters after which statistics is
 
 */
 
+/**
+@brief Get the input data stream and performs numerical calculationation on the
+different types of data recieved
+@param CB_t* source_ptr input data buffer
+@param uint32_t* count contains the count value for different types of data
+@return  returns the pointer to the count
+*/
+
 uint32_t* dataprocesser(CB_t* source_ptr,uint32_t* count);
 
 
@@ -49,6 +67,14 @@ void project2(void);
 
 void project2_demo(void);
 
+
+/**
+@brief Gets the  numerical calculationation on the
+different types of data recieved and logs to the serial terminal
+@param CB_t* source_ptr input data buffer
+@param uint32_t* char_count contains the count value for different types of data
+@return  none
+*/
 void log_statistics(CB_t* source_ptr,uint32_t* char_count);
 
 

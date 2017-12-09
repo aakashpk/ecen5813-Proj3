@@ -43,26 +43,54 @@ typedef struct
 
 CB_log_t * Logger_q;
 
-/*
 
+/**
+@brief  Initializes the data memebers of the CB_t structure
+        and allocates memory for the circularbuffer 
+
+@param  CB_t* source_ptr pointer to the CB_t structure
+
+@param  length gives the length of the circular buffer
+
+@return returns the status of the operation on the buffer
 */
+
 CB_status CB_log_init();
 
-/*
 
+/**
+@brief  Adds data to the circular buffer 
+
+@param  logdata_t *logVal pointer to the CB_t structure
+
+@param  CB_log_t *source_ptr pointer to the buffer
+
+@return returns the status of the operation on the buffer
 */
+
 
 CB_status log_add (logdata_t *logVal, CB_log_t *source_ptr);
 
 
-/*
-
+/**
+@brief prints the log data to the uart/stdio
+@param logdata_t *logData pointer to the buffer containing data to be logged
+@return none
 */
+
 void print_log(logdata_t *logData);
 
-/*
 
+/**
+@brief  Removes data to the circular buffer 
+
+@param  CB_t* source_ptr pointer to the CB_t structure
+
+@param  logvalue gets the value to be removed from the circular buffer
+
+@return returns the status of the operation on the buffer
 */
+
 CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr);
 
 

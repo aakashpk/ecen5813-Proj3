@@ -1,3 +1,13 @@
+/**
+*@file rtc.c
+*@brief RTC implementation is done from this file
+*@Author Aakash Kumar/ArunSundar
+*@date Nov 20 2017
+
+*/
+
+
+
 
 #include "rtc.h"
 
