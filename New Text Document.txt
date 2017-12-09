@@ -29,13 +29,17 @@ profiler.h
 %d date
 %y year
 
+
 integrate project2 well
+recheck numbers once, if possible average
+
+
 *clean up getlogtime for BBB and FRDM 
 UART DMA ??
 --documentation check
 
+find​ ​.​ ​\(​ ​-name​ ​"*.c"​ ​-o​ ​-name​ ​"*.h"​ ​\)​ ​-exec​ ​cat​ ​{}​ ​\; >codedumpreport
 
-recheck numbers once, if possible average
 
 
 --extra credit python script

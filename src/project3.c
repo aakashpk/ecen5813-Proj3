@@ -55,9 +55,6 @@ void spi_nrf(void)
 @param none
 @return  none
 */
-
-
-
 void project3(void)
 {
 	Logger_q=malloc(sizeof(CB_log_t));
@@ -119,9 +116,9 @@ void project3(void)
 		}
 	}
 	
-
 	#endif
-
+	
+	LOG_ITEM(createLog(SYSTEM_HALTED,0,NULL),Logger_q);
 }
 
 
