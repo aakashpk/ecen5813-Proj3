@@ -45,10 +45,10 @@ void RTC_Init()
 
 	if (RTC_SR & RTC_SR_TIF_MASK){
 		#ifdef buildepochsec
-		RTC_TSR = buildepochsec;
+		RTC_TSR = buildepochsec; // passing the build time obtained from makefile
 		#else
 		RTC_TSR = 0;
-		#endif//   add build time here
+		#endif
 	}
 
 	/*Enable RTC seconds irq*/
