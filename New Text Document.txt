@@ -32,12 +32,13 @@ profiler.h
 integrate project2 well
 *clean up getlogtime for BBB and FRDM 
 UART DMA ??
+--documentation check
 
-extra credit python script
-documentation
+
 recheck numbers once, if possible average
 
 
+--extra credit python script
 --add profiling type to log
 --DMA IRQ
 --add logging code

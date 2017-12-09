@@ -8,7 +8,7 @@
 
 #include "logger_queue.h"
 
-//#define VERBOSE
+//#define LOGPRETTY
 
 logdata_t logData;
 
@@ -116,7 +116,7 @@ CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr)
 
 void print_log(logdata_t *logData)
 {
-	#ifdef VERBOSE
+	#ifdef LOGPRETTY
 	LOG_RAW_STRING(logId_texts[logData->logID]);
 	LOG_RAW_STRING(" at ");
 	LOG_RAW_INT(logData->timestamp);
@@ -144,7 +144,6 @@ void print_log(logdata_t *logData)
 	
 }
 
-
 void log_flush(CB_log_t *  source_ptr){
 	
 	
@@ -156,6 +155,51 @@ void log_flush(CB_log_t *  source_ptr){
 	
 }
 
+#ifndef KL25Z
+	CB_status log_is_empty(CB_log_t* source_ptr) 
+	{
+		/*checks for null pointer */
+		if(source_ptr==NULL)
+		{
+			return null_error;
+		}
+		else
+		{
+
+			/* check buffer full condition */
+
+			if(source_ptr->count==0)
+			{
+				return buffer_empty;
+			}
+			else return ok;
+		}
+	}
+	
+	CB_status log_is_full(CB_log_t* source_ptr)
+	{
+
+		// checks for null pointer
+
+
+		if(source_ptr==NULL)
+		{
+			return null_error;
+		}
+
+		else
+		{
+
+			// check buffer full condition
+
+			if(source_ptr->count==source_ptr->length)
+			{
+				return buffer_full;
+			}
+			else return ok; // if buffer is not full and valid pointer is passed , return ok
+		}
+	}
+#endif
 
 
 

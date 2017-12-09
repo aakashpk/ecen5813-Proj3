@@ -13,7 +13,7 @@
 #include "conversion.h"
 #include <sys/time.h>
 
-#define KL25Z
+//#define KL25Z
 
 extern uint8_t log_enable;
 

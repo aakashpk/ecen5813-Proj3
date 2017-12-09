@@ -65,64 +65,70 @@ void print_log(logdata_t *logData);
 */
 CB_status log_remove(logdata_t * logValue, CB_log_t* source_ptr);
 
+
+
+ #ifdef KL25Z 
+ /**
+ * Function setup as static inline, hence defined in the header file
+ *
+ */
+	__attribute__((always_inline)) __STATIC_INLINE CB_status log_is_full(CB_log_t* source_ptr)
+	{
+
+		// checks for null pointer
+
+
+		if(source_ptr==NULL)
+		{
+			return null_error;
+		}
+
+		else
+		{
+
+			// check buffer full condition
+
+			if(source_ptr->count==source_ptr->length)
+			{
+				return buffer_full;
+			}
+			else return ok; // if buffer is not full and valid pointer is passed , return ok
+		}
+	}
+	
 /**
  * Function setup as static inline, hence defined in the header file
  *
  */
-
-__attribute__((always_inline)) __STATIC_INLINE __INLINE CB_status log_is_full(CB_log_t* source_ptr)
-//CB_status log_is_full(CB_log_t* source_ptr);
-
-{
-
-	// checks for null pointer
-
-
-	if(source_ptr==NULL)
+	__attribute__((always_inline)) __STATIC_INLINE CB_status log_is_empty(CB_log_t* source_ptr) 
 	{
-		return null_error;
-	}
-
-	else
-	{
-
-		// check buffer full condition
-
-		if(source_ptr->count==source_ptr->length)
+		/*checks for null pointer */
+		if(source_ptr==NULL)
 		{
-			return buffer_full;
+			return null_error;
 		}
-		else return ok; // if buffer is not full and valid pointer is passed , return ok
-	}
-}
-
-
-
-/**
- * Function setup as static inline, hence defined in the header file
- *
- */
-__attribute__((always_inline)) __STATIC_INLINE __INLINE CB_status log_is_empty(CB_log_t* source_ptr) // make this inline
-{
-
-	/*checks for null pointer */
-	if(source_ptr==NULL)
-	{
-		return null_error;
-	}
-	else
-	{
-
-		/* check buffer full condition */
-
-		if(source_ptr->count==0)
+		else
 		{
-			return buffer_empty;
+
+			/* check buffer full condition */
+
+			if(source_ptr->count==0)
+			{
+				return buffer_empty;
+			}
+			else return ok;
 		}
-		else return ok;
 	}
-}
+	
+
+#else 
+	CB_status log_is_full(CB_log_t* source_ptr);
+	CB_status log_is_empty(CB_log_t* source_ptr);
+#endif	
 
 void log_flush(CB_log_t *  source_ptr);
+	
+
+
 
 #endif // End of logger_queue.h

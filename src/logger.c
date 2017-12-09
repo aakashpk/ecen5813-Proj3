@@ -10,7 +10,7 @@
 #include "logger.h"
 #define TEN 10
 
-#define KL25Z
+//#define KL25Z
 
 #define DEBUG
 
@@ -172,7 +172,7 @@ void log_string(char * src){
 uint32_t getlogtime()
 {
 		gettimeofday(&log_time,NULL);
-		return log_time.tv_usec;
+		return log_time.tv_sec;
 }
 
 #endif
