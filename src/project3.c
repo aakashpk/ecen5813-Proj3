@@ -94,8 +94,10 @@ void project3(void)
 	//malloc 2 buffers for setting up profiling transfers
 	uint8_t * src_addr=malloc(5000),* dst_addr=malloc(5000);
 
+	
 	//Run profiling analysis on the memory functions
 	profiling_memory_functions(src_addr,dst_addr);
+
 
 	// free the allocated pointers after profiling is done
 	free(src_addr);
@@ -118,7 +120,7 @@ void project3(void)
 	
 	#endif
 	
-	LOG_ITEM(createLog(SYSTEM_HALTED,0,NULL),Logger_q);
+	LOG_ITEM(createLog(SYSTEM_HALTED,0,NULL),Logger_q); // System halted if code is here.
 }
 
 

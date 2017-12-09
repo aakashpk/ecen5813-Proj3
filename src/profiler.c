@@ -8,7 +8,7 @@ uint8_t	profile_result[24][10];
 
 //#define KL25Z
 
-//#define PROFILERESULT
+#define PROFILERESULT
 
 #ifdef KL25Z
 /**
