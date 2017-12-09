@@ -6,12 +6,16 @@ size_t start_count=0,end_count=0,profile_result_length;
 uint8_t	profile_result[24][10];
 
 
-//#define KL25Z
+#define KL25Z
 
 //#define PROFILERESULT
 
 #ifdef KL25Z
-
+/**
+@brief Configures the Ssystick for performing the profiling operations
+@param ticks value to initialise the systick down counter
+@return  none
+*/
 	void SysTick_Init(uint32_t ticks)
 	{
 		SysTick->LOAD  = (uint32_t)(ticks - 1UL);
@@ -21,6 +25,13 @@ uint8_t	profile_result[24][10];
 		SysTick->VAL   = 0UL;
 	}
 
+/**
+@brief Does profiling for memmove using DMA
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
+	
 	void profiling_memmove_dma(uint8_t * src_addr,uint8_t * dst_addr)
 	{
 		#ifdef PROFILERESULT
@@ -48,6 +59,11 @@ uint8_t	profile_result[24][10];
 
 	}
 
+/**
+@brief Does profiling for memset using DMA
+@param uint8_t * src_addr source pointer
+@return  none
+*/
 
 	void profiling_memset_dma(uint8_t * src_addr)
 	{
@@ -76,6 +92,11 @@ uint8_t	profile_result[24][10];
 	}
 
 #else
+/**
+@brief gets time from sys/time.h for BBB
+@param   none
+@return  none
+*/
 	
 	size_t getcount(void)
 	{
@@ -84,6 +105,13 @@ uint8_t	profile_result[24][10];
 	}
 	
 #endif
+
+/**
+@brief Does profiling for memset 
+@param uint8_t * src_addr source pointer
+@return  none
+*/
+
 
 void profiling_my_memset(uint8_t * src_addr)
 {	
@@ -111,6 +139,11 @@ void profiling_my_memset(uint8_t * src_addr)
 		}
 
 }
+/**
+@brief Does profiling for memset included from c library 
+@param uint8_t * src_addr source pointer
+@return  none
+*/
 
 void profiling_memset(uint8_t * src_addr)
 {
@@ -140,6 +173,14 @@ void profiling_memset(uint8_t * src_addr)
 
 }
 
+
+
+/**
+@brief Does profiling for memmove 
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
 void profiling_my_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 {
 	#ifdef PROFILERESULT
@@ -166,7 +207,12 @@ void profiling_my_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 		}
 
 }
-
+/**
+@brief Does profiling for memmove using c-library memmove
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
 void profiling_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 {
 	#ifdef PROFILERESULT
@@ -193,7 +239,13 @@ void profiling_memmove(uint8_t * src_addr,uint8_t * dst_addr)
 		}
 
 }
-
+/**
+@brief Does profiling for all memory functions, 
+		ie calls all the individual profiling functions
+@param uint8_t * src_addr source pointer
+@param uint8_t * dst_addr destination pointer
+@return  none
+*/
 void profiling_memory_functions(uint8_t * src_addr,uint8_t * dst_addr)
 {
 	LOG_ITEM(createLog(PROFILING_STARTED,0,NULL),Logger_q);
