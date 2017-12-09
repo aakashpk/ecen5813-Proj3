@@ -7,12 +7,15 @@
 
 */
 
+//#define KL25Z
+
 #include "project3.h"
+#ifdef KL25Z
 #include "project2.h"
+#endif
 
-#define KL25Z
+#define LOGGERSIZE 10
 
-#define LOGGERSIZE 5
 
 
 void project3(void)
@@ -60,7 +63,8 @@ void project3(void)
 	// free the allocated pointers after profiling is done
 	free(src_addr);
 	free(dst_addr);
-
+	
+	#ifdef KL25Z
 	uint32_t analysisResult[4]={0,0,0,0};
 
 	while(1)
@@ -71,6 +75,7 @@ void project3(void)
 			log_statistics(rx_cb,analysisResult);
 		}
 	}
+	#endif
 
 }
 
