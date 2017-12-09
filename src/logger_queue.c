@@ -191,8 +191,52 @@ void log_flush(CB_log_t *  source_ptr){
 	
 }
 
+#ifndef KL25Z
+
+CB_status log_is_empty(CB_log_t* source_ptr) 
+	{
+		/*checks for null pointer */
+		if(source_ptr==NULL)
+		{
+			return null_error;
+		}
+		else
+		{
+
+			/* check buffer full condition */
+
+			if(source_ptr->count==0)
+			{
+				return buffer_empty;
+			}
+			else return ok;
+		}
+	}
+
+CB_status log_is_full(CB_log_t* source_ptr)
+	{
+
+		// checks for null pointer
 
 
+		if(source_ptr==NULL)
+		{
+			return null_error;
+		}
+
+		else
+		{
+
+			// check buffer full condition
+
+			if(source_ptr->count==source_ptr->length)
+			{
+				return buffer_full;
+			}
+			else return ok; // if buffer is not full and valid pointer is passed , return ok
+		}
+	}
 
 
+#endif
 

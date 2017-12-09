@@ -34,7 +34,7 @@ have upto 4 times better speeds than the O0 compiled functions. The transfers ge
 ## Logger Functionality
 * The logger uses a circular buffer of structures of logdata type, this logs a logid enumeration, a timestamp in seconds since linux epoch 
  and a pointer to a payload and the length of the payload in logs that have a payload.
-* The log log out to UART/standard out shows a comma seperated timestamp,enumvalue,payload,checksumerror value for each log.
+* The logger log output to UART/standard output shows a comma seperated timestamp,enumvalue,payload,checksumerror value for each log.
 
 
 ## Extra credit
