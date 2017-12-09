@@ -22,8 +22,8 @@
 	#define END_CRITICAL() __enable_irq()
 
 #else
-	//
-
+	
+	//Dummy critical sections to prevent code from breaking on BBB & HOST
 	#define START_CRITICAL() {}
 	#define END_CRITICAL() {}
 
