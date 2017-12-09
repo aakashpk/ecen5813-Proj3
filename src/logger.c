@@ -47,6 +47,12 @@ char logId_texts[18][23] = {
 
 uint8_t itoa_buffer[10]; // allocating a buffer of length 10 as 32 bit int will have max 10 characters
 
+/**
+@brief Logs integer data to the serial terminal 
+@param int data data to be logged
+@return  none
+*/
+
 void log_integer(int data){
 
 	size_t length;
@@ -54,6 +60,14 @@ void log_integer(int data){
 	LOG_RAW_DATA(itoa_buffer,length);
 }
 
+/**
+@brief Gets the  numerical calculationation on the
+different types of data recieved and send its to a queue
+@param logID pointer the structure containing details of the log 
+@param size_t length of the log
+@param uint8_t* pointer to the payload to be logged
+@return  returns the structure pointer
+*/
 logdata_t * createLog(logid_t logID, size_t logLength, uint8_t * payload)
 {
 	if(log_enable)
@@ -68,6 +82,14 @@ logdata_t * createLog(logid_t logID, size_t logLength, uint8_t * payload)
 	return &logData;
 }
 
+/**
+@brief Performs checksums to validate data 
+@param logID pointer the structure containing details of the log 
+@param size_t length of the log
+@param uint8_t* pointer to the payload to be logged
+@param uint32_t timestamp contains the timestamp
+@return  return the calculated checksum
+*/
 
 uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, uint8_t * payload)
 {
@@ -77,6 +99,12 @@ uint32_t calc_checksum(logid_t logID, uint32_t timestamp , size_t logLength, uin
 
 #ifdef KL25Z
 
+/**
+@brief sends data to the uart
+@param uint8_t* src pointer to the data to be logged 
+@param size_t length length of the source pointer
+@return  none
+*/
 
 void log_data_uart(uint8_t * src, size_t length)
 {
@@ -86,6 +114,11 @@ void log_data_uart(uint8_t * src, size_t length)
 	 }
 }
 
+/**
+@brief sends string data to the uart 
+@param char* src pointer to the data to be logged 
+@return  none
+*/
 
 void log_string_uart(char * src){
 	j=0;
@@ -98,6 +131,13 @@ void log_string_uart(char * src){
 
 #else
 
+/**
+@brief Logs raw data to the serial terminal for BBB 
+@param uint8_t* src pointer to the data to be logged 
+@param size_t length length of the source pointer
+@return  none
+*/
+	
 void log_data(uint8_t * src, size_t length)
 {
 	j=0;
@@ -108,6 +148,13 @@ void log_data(uint8_t * src, size_t length)
 	}
 }
 
+/**
+@brief logs string data for BBB
+@param char* src pointer to the data to be logged 
+@return  none
+*/
+
+
 void log_string(char * src){
 	j=0;
 	while(*(src+j)!='\0') // print characters till string termination character
@@ -116,6 +163,11 @@ void log_string(char * src){
 		j++;
 	}
 }
+/**
+@brief gets time of the day
+@param  none 
+@return  none
+*/
 
 uint32_t getlogtime()
 {

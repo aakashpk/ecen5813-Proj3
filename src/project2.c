@@ -23,6 +23,15 @@ uint8_t nextline[2]="\n\r";
 
 uint32_t display_after_lim=25; // No of characters after which statistics is displayed
 
+/**
+@brief Get the input data stream and performs numerical calculationation on the
+different types of data recieved
+@param CB_t* source_ptr input data buffer
+@param uint32_t* count contains the count value for different types of data
+@return  returns the pointer to the count
+*/
+
+
 uint32_t* dataprocesser(CB_t* source_ptr,uint32_t* count)
 {
 uint8_t * removed_data=(uint8_t*)malloc(sizeof(uint8_t)); // change to array;
@@ -62,6 +71,14 @@ uint8_t index=0;
 return count;
 }
 
+/**
+@brief Gets the  numerical calculationation on the
+different types of data recieved and send its to a queue
+@param CB_t* source_ptr input data buffer
+@param CB_t* destination_ptr output data buffer
+@param uint32_t* char_count contains the count value for different types of data
+@return  none
+*/
 
 
 void dumpstatistics(CB_t* source_ptr,CB_t* destination_ptr,uint32_t* char_count)
@@ -87,6 +104,15 @@ void dumpstatistics(CB_t* source_ptr,CB_t* destination_ptr,uint32_t* char_count)
 	    			CB_buffer_add_n(destination_ptr,nextline,2); // go to newline after display
 }
 
+/**
+@brief Gets the  numerical calculationation on the
+different types of data recieved and logs to the serial terminal
+@param CB_t* source_ptr input data buffer
+@param uint32_t* char_count contains the count value for different types of data
+@return  none
+*/
+
+
 void log_statistics(CB_t* source_ptr,uint32_t* char_count)
 {
 	uint8_t PayloadData[4][10],statLength;
@@ -108,6 +134,11 @@ void log_statistics(CB_t* source_ptr,uint32_t* char_count)
 
 	LOG_ITEM(createLog(DATA_ANALYSIS_COMPLETED,0,NULL),Logger_q);
 }
+/**
+@brief Implementation function for project2
+@param none
+@return  none
+*/
 
 
 
@@ -146,6 +177,14 @@ void project2(void)
     }
 
 }
+
+
+/**
+@brief Implementation function for project2 demo problem
+@param none
+@return  none
+*/
+
 
 
 void project2_demo(void)

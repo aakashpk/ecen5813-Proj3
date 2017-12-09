@@ -14,6 +14,13 @@
 
 #define LOGGERSIZE 5
 
+/**
+@brief Implementation function for project3
+@param none
+@return  none
+*/
+
+
 
 void project3(void)
 {
@@ -78,6 +85,13 @@ void project3(void)
 	
 }
 
+/**
+@brief Implementation function for spi and nrf24l01 communication
+@param none
+@return  none
+*/
+
+
 void spi_nrf(void)
 {
 			SPI_init();
@@ -110,38 +124,4 @@ void spi_nrf(void)
 }
 
 
-
-/*
-
-	//LOG_RAW_STRING("\n\rInitialized \r\n");
-	//LOG_RAW_STRING("\n\r");
-
-	
-	printf("\nBuild time %d : %d : %d :%d \n",buildday,buildhour,buildmin,buildsec);
-	
-
-	//Jan 1 1970 00:00 linux epoch
-
-*/
-
-
-
-
-/*	LOG_RAW_STRING("\n\rDest Addr: ");
-	LOG_RAW_INT(dst_addr);
-	LOG_RAW_STRING("\n\rDest Data\n\r");
-	LOG_RAW_DATA(dst_addr,test_transfer_length);
-
-	my_memcpy(src_addr,dst_addr,test_transfer_length);
-	my_memmove_dma(src_addr,dst_addr,test_transfer_length);
-
-
-	LOG_RAW_STRING("\n\rSource Addr: ");
-	LOG_RAW_INT(src_addr);
-	LOG_RAW_STRING("\n\rSource Data\n\r");
-	LOG_RAW_DATA(src_addr,test_transfer_length);
-	LOG_RAW_STRING("\n\rDest Addr: ");
-	LOG_RAW_INT(dst_addr);
-	LOG_RAW_STRING("\n\rDest Data\n\r");
-	LOG_RAW_DATA(dst_addr,test_transfer_length);*/
 

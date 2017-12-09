@@ -16,6 +16,12 @@ size_t curmovelength=0,lastmovelength=0,checkval;
 
 uint8_t mem_buffer[5000];
 
+/**
+@brief Configures the DMA for performing the memory operations
+@param none
+@return  none
+*/
+
 
 void DMA_Init(){
 	// Enable clock gate for DMAMUX and DMA
@@ -29,7 +35,13 @@ void DMA_Init(){
 	DMA_DCR0|=DMA_DCR_EINT_MASK;
 
 }
-
+/**
+@brief Performs memset for using DMA for KL25Z
+@param uint8_t* src pointer the memory to be set
+@param size_t length of the memory
+@param uint8_t value value to set the memory
+@return  returns the  pointer to the memory
+*/
 uint8_t * my_memset_dma(uint8_t * src, size_t length, uint8_t value){
 
 	if(src!=NULL && length>0) // Check for NULL pointer and valid length
@@ -58,6 +70,14 @@ uint8_t * my_memset_dma(uint8_t * src, size_t length, uint8_t value){
 	//DMA_DCR0|=DMA_DCR_EINT_MASK;
 }
 
+/**
+@brief Performs memset for using DMA for different byte sizes for KL25Z
+@param uint8_t* src pointer the memory to be set
+@param size_t length of the memory
+@param uint8_t value value to set the memory
+@param uint8_t size size to be moved in a single operation 
+@return  returns the  pointer to the memory
+*/
 
 uint8_t * my_memset_dma_size(uint8_t * src, size_t length, uint8_t value,uint8_t size){
 
@@ -112,6 +132,13 @@ uint8_t * my_memset_dma_size(uint8_t * src, size_t length, uint8_t value,uint8_t
 
 
 }
+/**
+@brief Performs memmove for using DMA for KL25Z
+@param uint8_t* src pointer the memory to be set
+@param size_t length of the memory
+@param uint8_t* dst pointer to the destination
+@return  returns the  pointer to the memory
+*/
 
 uint8_t * my_memmove_dma(uint8_t * src, uint8_t * dst, size_t length){
 
@@ -141,6 +168,14 @@ uint8_t * my_memmove_dma(uint8_t * src, uint8_t * dst, size_t length){
 }
 
 
+/**
+@brief Performs memmove for using DMA for different byte sizes for KL25Z
+@param uint8_t* src pointer the memory to be set
+@param size_t length of the memory
+@param uint8_t* dst pinter to the destination 
+@param uint8_t transfer_size size to be moved in a single operation 
+@return  returns the  pointer to the memory
+*/
 uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_t transfer_size)
 {
 	if(src!=NULL && dst!=NULL && length>0) // Check for NULL pointer and valid length
@@ -196,6 +231,11 @@ uint8_t * my_memmove_dma_size(uint8_t * src, uint8_t * dst, size_t length,uint8_
 
 
 }
+/** 
+@brief IRQ handler for DMA interrupt
+@param none
+@return none
+*/
 
 void DMA0_IRQHandler(){
 

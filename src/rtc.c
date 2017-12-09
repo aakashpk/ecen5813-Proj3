@@ -1,10 +1,11 @@
 
 #include "rtc.h"
 
-/*
- *
- *
- */
+/**
+@brief Configures the RTC for performing for sending time
+@param none
+@return  none
+*/
 void RTC_Init()
 {
 
@@ -56,10 +57,20 @@ void RTC_Init()
  *
  *
  */
+/**
+@brief gives the time for the logs
+@param none
+@return returns seconds from rtc 
+*/
 uint32_t getlogtime(){
 	return RTC_TSR;
 }
 
+/** 
+@brief IRQ handler for RTC interrupt
+@param none
+@return none
+*/
 void RTC_Seconds_IRQHandler()
 {
 	LOG_ITEM(createLog(HEART_BEAT,0,NULL),Logger_q);
