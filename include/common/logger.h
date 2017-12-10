@@ -13,9 +13,10 @@
 #include "conversion.h"
 #include <sys/time.h>
 
-//#define KL25Z
+#define KL25Z
 
 extern uint8_t log_enable;
+
 
 typedef enum logId {
 	LOGGER_INITIALZED,
@@ -35,7 +36,8 @@ typedef enum logId {
 	DATA_PUNCTUATION_COUNT,
 	DATA_MISC_COUNT,
 	DATA_ANALYSIS_COMPLETED,
-	HEART_BEAT
+	HEART_BEAT,
+	LED_STATUS
 	} logid_t;
 	
 	

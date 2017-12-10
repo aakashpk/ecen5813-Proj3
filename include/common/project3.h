@@ -16,11 +16,14 @@
 #include "profiler.h"
 
 
-//#define KL25Z
+#define KL25Z
 
 #ifdef KL25Z
 #include "dma.h"
 #include "led.h"
+#include "spi.h"
+#include "nordic.h"
+#include "gpio.h"
 
 #endif
 /**
@@ -39,3 +42,4 @@ void project3(void);
 
 void spi_nrf(void);
 
+void project3_demo(void);

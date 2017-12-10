@@ -17,3 +17,66 @@ void RGB_LED_Init()
 
 	REDOFF;GREENOFF;BLUEOFF;
 }
+
+void changecolour(uint8_t num)
+{
+	switch(num)
+	{
+		case 0:
+		{
+			REDOFF;GREENOFF;BLUEOFF; break;
+		}
+		case 1:
+		{
+			REDOFF;GREENOFF;BLUEON; break;
+		}
+		case 2:
+		{
+			REDOFF;GREENON;BLUEOFF; break;
+		}
+		case 3:
+		{
+			REDOFF;GREENON;BLUEON; break;
+		}
+		case 4:
+		{
+			REDON;GREENOFF;BLUEOFF; break;
+		}
+		case 5:
+		{
+			REDON;GREENOFF;BLUEON; break;
+		}
+		case 6:
+		{
+			REDON;GREENON;BLUEOFF; break;
+		}
+		case 7:
+		{
+			REDON;GREENON;BLUEOFF; break;
+		}
+		default:
+		{
+			REDOFF;GREENOFF;BLUEOFF; break;
+		}
+	}
+}
+
+/*
+ * RGB
+ * 000
+ * 001
+ * 010
+ * 011
+ * 100
+ * 101
+ * 110
+ * 111
+ *
+ */
+
+/*
+getledstatus()
+{
+	if()
+}
+*/

@@ -27,7 +27,7 @@ void SPI_init()
 
 //	PORTC_PCR7 = PORT_PCR_MUX(0x1);  // for chip enable
 
-	PORTD_PCR0 = PORT_PCR_MUX(0x1); // EnAble the spi chip select using GPIO
+	PORTD_PCR0 = PORT_PCR_MUX(0x1); // EnAble the spi chip select using GPIO , PD0
 
 	PORTD_PCR1 = PORT_PCR_MUX(0x2); //Enable the SPI_SCK function on PTA15
 

@@ -10,9 +10,9 @@
 #include "logger.h"
 #define TEN 10
 
-//#define KL25Z
+#define KL25Z
 
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
 uint8_t log_enable=1;

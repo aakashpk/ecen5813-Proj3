@@ -23,4 +23,6 @@ These have been setup as macros above.
  */
 void RGB_LED_Init();
 
+void changecolour(uint8_t num);
+
 

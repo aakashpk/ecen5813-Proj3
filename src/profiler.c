@@ -6,9 +6,9 @@ size_t start_count=0,end_count=0,profile_result_length;
 uint8_t	profile_result[24][10];
 
 
-//#define KL25Z
+#define KL25Z
 
-#define PROFILERESULT
+//#define PROFILERESULT
 
 #ifdef KL25Z
 /**

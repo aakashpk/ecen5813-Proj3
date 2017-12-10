@@ -15,6 +15,8 @@
 #include "led.h"
 #include "logger_queue.h"
 
+extern uint8_t ledstate;
+
 #define BAUD 38400
 
 #if(BAUD==9600)

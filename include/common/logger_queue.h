@@ -12,6 +12,7 @@
 #include "circularbuffer.h"
 #include "logger.h"
 
+#define KL25Z
 
 #ifdef KL25Z
 	#include "MKL25Z4.h"

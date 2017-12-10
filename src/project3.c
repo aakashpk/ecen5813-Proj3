@@ -7,12 +7,55 @@
 
 */
 
-//#define KL25Z
+#define KL25Z
 
 #include "project3.h"
 
 #ifdef KL25Z
 #include "project2.h"
+
+
+#define LOGGERSIZE 10
+
+void project3_demo(void){
+
+	Logger_q=malloc(sizeof(CB_log_t));
+	logdata_t * logData = malloc(sizeof(logdata_t));
+
+	//Payload circular buffer----
+
+	if(log_enable)
+	{
+
+		#ifdef KL25Z
+		RTC_Init();
+		#endif
+
+		if(CB_log_init(Logger_q,LOGGERSIZE) == success) LOG_ITEM(createLog(LOGGER_INITIALZED,0,NULL),Logger_q);
+	}
+
+
+	#ifdef KL25Z
+	// Initializations required only in KL25Z
+	UART_configure();
+	DMA_Init();
+	SysTick_Init(1000000);
+	RGB_LED_Init();
+
+	NVIC_SetPriority(RTC_Seconds_IRQn,0);
+	NVIC_SetPriority(DMA0_IRQn,2); //Set priority of 1 for DMA interrupt
+	NVIC_SetPriority(UART0_IRQn,4); //Set priority of 2 for UART0 interrupt
+	__enable_irq(); // Enable global interrupts
+
+	 rx_cb=malloc(sizeof(CB_t));
+	 CB_init(rx_cb,30);
+
+	#endif
+
+	LOG_ITEM(createLog(SYSTEM_INITIALIZED,0,NULL),Logger_q);
+
+
+}
 
 
 /**
@@ -54,7 +97,6 @@ void spi_nrf(void)
 
 #endif
 
-#define LOGGERSIZE 10
 
 
 /**

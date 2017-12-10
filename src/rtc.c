@@ -16,6 +16,9 @@
 @param none
 @return  none
 */
+
+uint8_t ledpayload[10],lplength;
+
 void RTC_Init()
 {
 
@@ -84,4 +87,7 @@ uint32_t getlogtime(){
 void RTC_Seconds_IRQHandler()
 {
 	LOG_ITEM(createLog(HEART_BEAT,0,NULL),Logger_q);
+	lplength=my_itoa(ledstate,ledpayload,10);
+	LOG_ITEM(createLog(LED_STATUS,lplength,ledpayload),Logger_q);
+
 }
